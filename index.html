@@ -28,19 +28,13 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3c-6 0-10 4-10 9 0 3 2 5 4 6l1 10h10l1-10c2-1 4-3 4-6 0-5-4-9-10-9z' fill='%233E8E41'/%3E%3Crect x='14' y='20' width='4' height='10' fill='%234B3321'/%3E%3C/svg%3E"
     />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;700;900&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="css/output.css" />
     <!-- Three.js import map (only pages with 3D scenes need this) -->
     <script type="importmap">
       {
         "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+          "three": "./vendor/three/three.module.js",
+          "three/addons/": "./vendor/three/addons/"
         }
       }
     </script>
@@ -650,9 +644,9 @@
     <div id="site-footer"></div>
 
     <!-- Libraries (classic scripts, pinned versions) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="vendor/anime.min.js"></script>
     <!-- Local code (namespaced globals, no modules) -->
     <script src="js/utils.js"></script>
     <script src="js/data/village.js"></script>
