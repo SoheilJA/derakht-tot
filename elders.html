@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>بزرگان روستا | درخت توت</title>
+    <meta
+      name="description"
+      content="زندگی‌نامه بزرگان و چهره‌های ماندگار روستای درخت توت؛ کدخداها، معلمان، هنرمندان و کشاورزان."
+    />
+    <meta name="theme-color" content="#2B0A1F" />
+    <meta property="og:title" content="بزرگان روستا | درخت توت" />
+    <meta
+      property="og:description"
+      content="زندگی‌نامه بزرگان و چهره‌های ماندگار روستای درخت توت."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="images/og-default.jpg" />
+    <link rel="canonical" href="" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3c-6 0-10 4-10 9 0 3 2 5 4 6l1 10h10l1-10c2-1 4-3 4-6 0-5-4-9-10-9z' fill='%233E8E41'/%3E%3Crect x='14' y='20' width='4' height='10' fill='%234B3321'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/output.css" />
+  </head>
+  <body
+    data-page="elders"
+    data-nav="elders"
+    class="bg-cream-50 text-bark-900 font-body antialiased overflow-x-hidden"
+  >
+    <div id="site-header"></div>
+
+    <main id="main">
+      <section
+        class="relative bg-leaf-900 overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28"
+      >
+        <div
+          class="absolute inset-0 kilim-bg opacity-15"
+          aria-hidden="true"
+        ></div>
+        <div class="relative container mx-auto px-5 md:px-8 text-center">
+          <p class="text-leaf-300 text-sm tracking-[.3em] mb-3 font-bold">
+            درخت توت
+          </p>
+          <h1
+            class="font-display text-5xl md:text-7xl text-cream-50"
+            data-reveal
+          >
+            بزرگان روستا
+          </h1>
+          <p
+            class="mt-5 text-cream-100/70 max-w-lg mx-auto leading-8"
+            data-reveal
+          >
+            آنان که سایه‌ی این توت‌ها بودند؛ نامشان را جست‌وجو کنید.
+          </p>
+        </div>
+      </section>
+
+      <section class="bg-cream-50 py-14 md:py-20 min-h-[60vh]">
+        <div class="container mx-auto px-5 md:px-8">
+          <div class="flex flex-col md:flex-row items-center gap-5 mb-10">
+            <div class="relative w-full md:w-80">
+              <svg
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-bark-500"
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4.3-4.3" />
+              </svg>
+              <input
+                id="elder-search"
+                type="search"
+                class="form-input pr-11"
+                placeholder="جست‌وجوی نام بزرگ روستا…"
+                aria-label="جست‌وجوی بزرگان"
+              />
+            </div>
+            <div
+              id="elder-chips"
+              class="flex flex-wrap gap-2.5 justify-center"
+              role="tablist"
+              aria-label="دسته‌بندی بزرگان"
+            ></div>
+          </div>
+          <div
+            id="elders-grid"
+            class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          ></div>
+          <p
+            id="elders-empty"
+            class="hidden text-center text-bark-700/60 py-14"
+          >
+            کسی با این نام در سایه‌ی توت‌ها نبود.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data/village.js"></script>
+    <script src="js/data/news.js"></script>
+    <script src="js/data/elders.js"></script>
+    <script src="js/data/family.js"></script>
+    <script src="js/data/data-service.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/elders.js"></script>
+  </body>
+</html>

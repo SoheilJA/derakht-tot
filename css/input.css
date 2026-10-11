@@ -1,0 +1,717 @@
+@import "tailwindcss";
+
+/* ============================================================
+   درخت توت — input.css (Tailwind v4)
+   1) @theme      → جایگزین tailwind.config
+   2) @layer base → استایل‌های پایه
+   3) @layer components → کلاس‌های سفارشی (دکمه، فرم، prose، ...)
+   4) بقیه (keyframes و media) بیرون از layer
+   ============================================================ */
+
+/* ---------- 1) Theme: رنگ‌ها و فونت‌ها ---------- */
+@theme {
+  --font-body: "Vazirmatn", sans-serif;
+  --font-display: "Lalezar", "Vazirmatn", sans-serif;
+
+  --color-mulberry-900: #2b0a1f;
+  --color-mulberry-700: #5a1a3f;
+  --color-mulberry-500: #8e2c63;
+  --color-mulberry-300: #c26a97;
+
+  --color-leaf-900: #0f2a1a;
+  --color-leaf-700: #1f4d2b;
+  --color-leaf-500: #3e8e41;
+  --color-leaf-300: #8bc17a;
+
+  --color-bark-900: #2a1c12;
+  --color-bark-700: #4b3321;
+  --color-bark-500: #7a5636;
+
+  --color-cream-50: #fbf6ec;
+  --color-cream-100: #f3ead6;
+
+  --color-sand-300: #e3d2ae;
+
+  --color-gold-500: #d4a24c;
+}
+
+/* ---------- 2) Base ---------- */
+@layer base {
+  ::selection {
+    background: var(--color-mulberry-500);
+    color: var(--color-cream-50);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-cream-50);
+  }
+
+  /* Scrollbar — a thin branch */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream-100);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-bark-500);
+    border-radius: 8px;
+    border: 2px solid var(--color-cream-100);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-mulberry-700);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* ---------- 3) Components ---------- */
+@layer components {
+  /* Skip link */
+  .skip-link {
+    position: fixed;
+    top: -70px;
+    right: 16px;
+    z-index: 400;
+    background: var(--color-mulberry-700);
+    color: var(--color-cream-50);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    transition: top 0.25s;
+  }
+  .skip-link:focus {
+    top: 16px;
+  }
+
+  /* Split text helper chars */
+  .split-char {
+    display: inline-block;
+    will-change: transform;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 2.1rem;
+    border-radius: 9999px;
+    background: linear-gradient(
+      140deg,
+      var(--color-mulberry-500),
+      var(--color-mulberry-700)
+    );
+    color: var(--color-cream-50);
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: 0 14px 34px -14px rgba(142, 44, 99, 0.65);
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -14px rgba(142, 44, 99, 0.75);
+  }
+
+  .btn-ghost {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem 2.1rem;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(194, 106, 151, 0.55);
+    color: var(--color-mulberry-700);
+    background: transparent;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+  }
+  .on-dark .btn-ghost,
+  .btn-ghost.on-dark {
+    color: var(--color-cream-50);
+    border-color: rgba(227, 210, 174, 0.4);
+  }
+  .btn-ghost:hover {
+    background: rgba(142, 44, 99, 0.08);
+    border-color: var(--color-mulberry-500);
+  }
+  .on-dark .btn-ghost:hover {
+    background: rgba(251, 246, 236, 0.08);
+  }
+
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(251, 246, 236, 0.35);
+    transform: scale(0);
+    animation: ripple 0.65s ease-out forwards;
+    pointer-events: none;
+  }
+  .burst-p {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* ---------- Custom cursor ---------- */
+  #cursor-dot {
+    position: fixed;
+    z-index: 260;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border-radius: 50%;
+    background: var(--color-mulberry-500);
+    pointer-events: none;
+  }
+  #cursor-ring {
+    position: fixed;
+    z-index: 259;
+    width: 38px;
+    height: 38px;
+    margin: -19px 0 0 -19px;
+    border: 1.5px solid rgba(142, 44, 99, 0.65);
+    border-radius: 50%;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      width 0.3s,
+      height 0.3s,
+      margin 0.3s,
+      background-color 0.3s,
+      border-color 0.3s;
+  }
+  #cursor-ring span {
+    opacity: 0;
+    font-size: 11px;
+    color: var(--color-cream-50);
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  #cursor-ring.is-view {
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    background: rgba(90, 26, 63, 0.92);
+    border-color: transparent;
+  }
+  #cursor-ring.is-view span {
+    opacity: 1;
+  }
+  body.has-cursor,
+  body.has-cursor a,
+  body.has-cursor button,
+  body.has-cursor [role="button"] {
+    cursor: none;
+  }
+  body.has-cursor input,
+  body.has-cursor textarea {
+    cursor: auto;
+  }
+  @media (pointer: coarse) {
+    #cursor-dot,
+    #cursor-ring {
+      display: none;
+    }
+  }
+
+  /* ---------- Organic masks & arches ---------- */
+  .blob-a {
+    border-radius: 58% 42% 55% 45% / 48% 55% 45% 52%;
+  }
+  .blob-b {
+    border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%;
+  }
+  .leaf-mask {
+    border-radius: 0 50% 0 50%;
+  }
+  .arch {
+    border-radius: 999px 999px 18px 18px;
+  }
+
+  /* ---------- Kilim accents ---------- */
+  .kilim-band {
+    height: 12px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'%3E%3Cpath d='M0 6 6 0l6 6-6 6z' fill='%23D4A24C'/%3E%3Cpath d='M14 6l6-6 6 6-6 6z' fill='%238E2C63'/%3E%3C/svg%3E")
+      repeat-x center / 28px 12px;
+    opacity: 0.55;
+  }
+  .kilim-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52'%3E%3Cpath d='M26 6 46 26 26 46 6 26z' fill='none' stroke='%23E3D2AE' stroke-width='1.4'/%3E%3Ccircle cx='26' cy='26' r='2.5' fill='%23E3D2AE'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Divider leaves (SVG injected by main.js) ---------- */
+  .dv-leaf {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* ---------- Forms ---------- */
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-bark-700);
+    margin-bottom: 0.45rem;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--color-cream-50);
+    border: 1.5px solid var(--color-sand-300);
+    border-radius: 16px;
+    padding: 0.8rem 1.1rem;
+    font-size: 0.95rem;
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-mulberry-500);
+    box-shadow: 0 0 0 4px rgba(142, 44, 99, 0.12);
+  }
+  .field-error {
+    display: none;
+    color: #a3233b;
+    font-size: 0.78rem;
+    margin-top: 0.4rem;
+  }
+  .field-error.show {
+    display: block;
+    animation: errIn 0.25s ease-out;
+  }
+
+  /* ---------- Prose (news-detail / elder bio) ---------- */
+  .prose-village {
+    color: #3b2b1d;
+    line-height: 2.1;
+    font-size: 1.02rem;
+  }
+  .prose-village h2 {
+    font-family: var(--font-display);
+    color: var(--color-mulberry-700);
+    font-size: 1.65rem;
+    margin: 2.4rem 0 1rem;
+  }
+  .prose-village h3 {
+    font-family: var(--font-display);
+    color: var(--color-mulberry-500);
+    font-size: 1.3rem;
+    margin: 2rem 0 0.8rem;
+  }
+  .prose-village p {
+    margin: 1.15rem 0;
+  }
+  .prose-village a {
+    color: var(--color-mulberry-500);
+    text-decoration: underline;
+    text-decoration-color: var(--color-mulberry-300);
+    text-underline-offset: 4px;
+  }
+  .prose-village blockquote {
+    position: relative;
+    background: var(--color-cream-100);
+    border-radius: 20px;
+    padding: 1.2rem 1.6rem;
+    margin: 1.8rem 0;
+    color: var(--color-mulberry-700);
+  }
+  .prose-village blockquote::before {
+    content: "";
+    position: absolute;
+    right: -7px;
+    top: 34px;
+    width: 14px;
+    height: 14px;
+    background: var(--color-leaf-500);
+    border-radius: 0 60% 0 60%;
+    transform: rotate(45deg);
+  }
+  .prose-village ul {
+    list-style: none;
+    margin: 1.2rem 0;
+    padding: 0;
+  }
+  .prose-village ul li {
+    position: relative;
+    padding-right: 1.4rem;
+    margin: 0.6rem 0;
+  }
+  .prose-village ul li::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0.62em;
+    width: 9px;
+    height: 9px;
+    background: var(--color-mulberry-500);
+    border-radius: 0 50% 50% 50%;
+    transform: rotate(45deg);
+  }
+  .prose-village figure {
+    margin: 2rem 0;
+  }
+  .prose-village figcaption {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--color-bark-500);
+    margin-top: 0.6rem;
+  }
+  .prose-village img {
+    border-radius: 20px;
+  }
+
+  /* ---------- Chips ---------- */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-sand-300);
+    background: var(--color-cream-50);
+    color: var(--color-bark-700);
+    font-size: 0.85rem;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .chip:hover {
+    border-color: var(--color-mulberry-300);
+    color: var(--color-mulberry-700);
+  }
+  .chip.active {
+    background: var(--color-mulberry-700);
+    border-color: var(--color-mulberry-700);
+    color: var(--color-cream-50);
+  }
+  .chip .chip-underline {
+    position: absolute;
+    bottom: -1px;
+    right: 20%;
+    left: 20%;
+    height: 2px;
+    background: var(--color-gold-500);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .chip.active .chip-underline {
+    transform: scaleX(1);
+  }
+
+  /* ---------- Pagination buttons (was inline <style>) ---------- */
+  .pg-btn {
+    min-width: 40px;
+    padding: 0.45rem 0.9rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--color-sand-300);
+    background: var(--color-cream-50);
+    font-size: 0.85rem;
+    transition: all 0.25s;
+  }
+  .pg-btn:hover:not(:disabled) {
+    background: var(--color-mulberry-700);
+    color: var(--color-cream-50);
+  }
+  .pg-btn.active {
+    background: var(--color-mulberry-700);
+    color: var(--color-cream-50);
+    border-color: var(--color-mulberry-700);
+  }
+  .pg-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* ---------- Sliders / snap ---------- */
+  .slider-scroll {
+    scrollbar-width: none;
+  }
+  .slider-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .slider-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-sand-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-bark-700);
+    background: var(--color-cream-50);
+    transition: all 0.25s;
+  }
+  .slider-arrow:hover {
+    background: var(--color-mulberry-700);
+    color: var(--color-cream-50);
+    border-color: var(--color-mulberry-700);
+    transform: translateY(-2px);
+  }
+  .dragging {
+    scroll-behavior: auto !important;
+  }
+
+  /* ---------- Elder wreath ---------- */
+  .wreath {
+    position: absolute;
+    inset: -14px;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .wreath svg {
+    width: 100%;
+    height: 100%;
+    animation: spinSlow 9s linear infinite;
+  }
+  .group:hover .wreath {
+    opacity: 1;
+  }
+
+  /* ---------- Hero leaf indicator ---------- */
+  .leaf-indicator {
+    animation: leafBob 2.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  /* ---------- Lightbox ---------- */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: rgba(26, 10, 20, 0.93);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #lightbox img {
+    max-width: 88vw;
+    max-height: 80vh;
+    border-radius: 22px;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+  }
+  #lightbox .lb-cap {
+    position: absolute;
+    bottom: 7vh;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: var(--color-cream-100);
+    font-size: 0.9rem;
+  }
+  .lb-btn {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(251, 246, 236, 0.1);
+    color: var(--color-cream-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(251, 246, 236, 0.25);
+    transition: background 0.25s;
+  }
+  .lb-btn:hover {
+    background: rgba(142, 44, 99, 0.7);
+  }
+
+  /* ---------- Quote carousel ---------- */
+  .quote-card {
+    background: var(--color-cream-100);
+    border: 1px solid var(--color-sand-300);
+    border-radius: 26px;
+    padding: 2.2rem 2rem;
+    position: relative;
+  }
+  .quote-card::before {
+    content: "«";
+    position: absolute;
+    top: 6px;
+    right: 22px;
+    font-family: var(--font-display);
+    font-size: 3.4rem;
+    color: var(--color-mulberry-300);
+    line-height: 1;
+  }
+
+  /* ---------- Lifespan bar ---------- */
+  .lifebar {
+    height: 10px;
+    background: var(--color-cream-100);
+    border: 1px solid var(--color-sand-300);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .lifebar > div {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--color-leaf-500),
+      var(--color-mulberry-500)
+    );
+    border-radius: 999px;
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+
+  /* ---------- 3D family-tree page ---------- */
+  #tree-stage {
+    cursor: grab;
+    touch-action: none;
+  }
+  #tree-stage:active {
+    cursor: grabbing;
+  }
+  .tree-label {
+    background: rgba(43, 10, 31, 0.78);
+    color: var(--color-cream-50);
+    border: 1px solid rgba(194, 106, 151, 0.35);
+    padding: 0.18rem 0.65rem;
+    border-radius: 999px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    backdrop-filter: blur(3px);
+    font-family: var(--font-body);
+  }
+  .tree-label.deceased {
+    opacity: 0.62;
+    text-decoration: line-through rgba(194, 106, 151, 0.6);
+  }
+  .tree-label.dim {
+    opacity: 0.15 !important;
+  }
+  .tree-tooltip {
+    background: rgba(15, 42, 26, 0.92);
+    color: var(--color-cream-50);
+    border: 1px solid rgba(212, 162, 76, 0.5);
+    border-radius: 14px;
+    padding: 0.55rem 0.9rem;
+    font-size: 12px;
+    pointer-events: none;
+    text-align: center;
+    line-height: 1.9;
+    font-family: var(--font-body);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  .tree-tooltip b {
+    font-size: 13px;
+    color: var(--color-gold-500);
+  }
+  #tree-panel {
+    transform: translateX(105%);
+  }
+  .tree-tool {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(43, 10, 31, 0.65);
+    border: 1px solid rgba(194, 106, 151, 0.3);
+    color: var(--color-cream-100);
+    transition: all 0.25s;
+    backdrop-filter: blur(6px);
+  }
+  .tree-tool:hover {
+    background: var(--color-mulberry-500);
+  }
+  .tree-tool.on {
+    background: var(--color-mulberry-500);
+    color: var(--color-cream-50);
+    border-color: var(--color-gold-500);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    /* قبلاً var(--cream-100/85) بود که CSS معتبر نیست */
+    color: color-mix(in srgb, var(--color-cream-100) 85%, transparent);
+    padding: 0.3rem 0.55rem;
+    border-radius: 10px;
+    transition: background 0.2s;
+  }
+  .legend-item:hover {
+    background: rgba(142, 44, 99, 0.35);
+  }
+
+  /* ---------- Mobile gallery native scroll fallback ---------- */
+  @media (max-width: 767px) {
+    #gallery-track {
+      transform: none !important;
+    }
+    #gallery-pin {
+      scroll-snap-type: x mandatory;
+    }
+    #gallery-pin .g-card {
+      scroll-snap-align: center;
+    }
+  }
+}
+
+/* ---------- 4) Keyframes ---------- */
+@keyframes ripple {
+  to {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+@keyframes errIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes leafBob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(8deg);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+  .leaf-indicator,
+  .wreath svg {
+    animation: none;
+  }
+}

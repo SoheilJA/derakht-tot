@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>شجره‌نامه سه‌بعدی روستای درخت توت</title>
+    <meta
+      name="description"
+      content="شجره‌نامه تعاملی و سه‌بعدی خانواده‌های روستای درخت توت؛ نسل به نسل، از ریشه تا برگ."
+    />
+    <meta name="theme-color" content="#14081F" />
+    <meta property="og:title" content="شجره‌نامه سه‌بعدی | درخت توت" />
+    <meta
+      property="og:description"
+      content="شجره‌نامه تعاملی و سه‌بعدی خانواده‌های روستای درخت توت."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="images/og-default.jpg" />
+    <link rel="canonical" href="" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3c-6 0-10 4-10 9 0 3 2 5 4 6l1 10h10l1-10c2-1 4-3 4-6 0-5-4-9-10-9z' fill='%233E8E41'/%3E%3Crect x='14' y='20' width='4' height='10' fill='%234B3321'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/output.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body
+    data-page="family"
+    data-nav="family"
+    data-chrome="minimal"
+    class="bg-[#14081F] text-cream-50 font-body antialiased overflow-x-hidden"
+  >
+    <!-- Minimal navbar overlay (this page is immersive: no standard navbar/footer) -->
+    <header class="fixed top-0 inset-x-0 z-50">
+      <div
+        class="container mx-auto px-4 md:px-8 py-4 flex items-center justify-between"
+      >
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 48 48"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M24 4C15 4 9 10.5 9 18.5 9 24 12.5 27.5 16 29l1.5 13h13L32 29c3.5-1.5 7-5 7-10.5C39 10.5 33 4 24 4z"
+              fill="#3E8E41"
+            />
+            <rect x="21.5" y="26" width="5" height="16" rx="2" fill="#4B3321" />
+          </svg>
+          <span
+            class="font-display text-xl group-hover:text-gold-500 transition-colors"
+            >درخت توت</span
+          >
+        </a>
+        <a
+          href="index.html"
+          class="text-sm text-cream-100/70 hover:text-gold-500 transition-colors inline-flex items-center gap-1.5"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M11 18l-6-6 6-6" /></svg
+          >بازگشت به روستا</a
+        >
+      </div>
+    </header>
+
+    <main id="main" class="relative">
+      <h1 class="sr-only">شجره‌نامه روستای درخت توت — نمای سه‌بعدی</h1>
+      <div
+        id="tree-stage"
+        class="fixed inset-0"
+        aria-label="نمای سه‌بعدی شجره‌نامه"
+      ></div>
+
+      <!-- family selector (shown when more than one root exists) -->
+      <div
+        id="family-chips"
+        class="fixed top-20 inset-x-0 z-40 flex flex-wrap justify-center gap-2 px-4"
+      ></div>
+
+      <!-- search -->
+      <div
+        class="fixed top-20 md:top-24 right-4 md:right-8 z-40 w-64"
+        id="tree-search-wrap"
+      >
+        <div class="relative">
+          <svg
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-cream-100/50"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.3-4.3" />
+          </svg>
+          <input
+            id="tree-search"
+            type="search"
+            autocomplete="off"
+            placeholder="جست‌وجوی نام در شجره‌نامه…"
+            class="w-full bg-mulberry-900/70 backdrop-blur-md border border-mulberry-300/30 rounded-xl py-2.5 pr-10 pl-3 text-sm text-cream-50 placeholder:text-cream-100/40 focus:outline-none focus:border-gold-500 transition-colors"
+            aria-label="جست‌وجو در شجره‌نامه"
+          />
+        </div>
+        <div
+          id="search-results"
+          class="hidden mt-2 bg-mulberry-900/90 backdrop-blur-md border border-mulberry-300/30 rounded-xl overflow-hidden max-h-64 overflow-y-auto"
+        ></div>
+      </div>
+
+      <!-- toolbar -->
+      <div
+        class="fixed bottom-5 inset-x-0 z-40 flex flex-wrap justify-center gap-2 px-4"
+        role="toolbar"
+        aria-label="ابزارهای شجره‌نامه"
+      >
+        <button
+          class="tree-tool"
+          data-action="reset"
+          title="بازنشانی نما"
+          aria-label="بازنشانی نما"
+        >
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M3 12a9 9 0 109-9 9.74 9.74 0 00-6.7 3L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+        </button>
+        <button
+          class="tree-tool on"
+          data-action="rotate"
+          title="چرخش خودکار"
+          aria-label="چرخش خودکار"
+        >
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M21 12a9 9 0 11-3-6.7" />
+            <path d="M21 3v5h-5" />
+          </svg>
+        </button>
+        <button
+          class="tree-tool on"
+          data-action="labels"
+          title="نمایش نام‌ها"
+          aria-label="نمایش نام‌ها"
+        >
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M4 7V5h16v2M12 5v14M9 19h6" />
+          </svg>
+        </button>
+        <button
+          class="tree-tool"
+          data-action="rings"
+          title="حلقه‌های نسل"
+          aria-label="حلقه‌های نسل"
+        >
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+        </button>
+        <button
+          class="tree-tool"
+          data-action="layout"
+          title="تغییر آرایش"
+          aria-label="تغییر آرایش"
+        >
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="6" cy="6" r="2" />
+            <circle cx="12" cy="12" r="2" />
+            <circle cx="18" cy="6" r="2" />
+            <circle cx="6" cy="18" r="2" />
+            <circle cx="18" cy="18" r="2" />
+            <path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3" />
+          </svg>
+        </button>
+        <button
+          class="tree-tool"
+          data-action="fullscreen"
+          title="تمام‌صفحه"
+          aria-label="تمام‌صفحه"
+        >
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- generation legend -->
+      <div
+        id="legend"
+        class="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-40 bg-mulberry-900/60 backdrop-blur-md border border-mulberry-300/25 rounded-2xl p-3 space-y-0.5 hidden md:block"
+        aria-label="نسل‌ها"
+      ></div>
+
+      <!-- first-visit hint overlay -->
+      <div
+        id="tree-hint"
+        class="fixed inset-0 z-[70] bg-[#14081F]/80 backdrop-blur-sm flex items-center justify-center px-6 transition-opacity duration-700"
+      >
+        <div
+          class="bg-mulberry-900/90 border border-mulberry-300/30 rounded-3xl p-8 md:p-10 text-center max-w-md"
+        >
+          <svg
+            width="56"
+            height="56"
+            viewBox="0 0 48 48"
+            fill="none"
+            class="mx-auto mb-4"
+          >
+            <path
+              d="M24 4C15 4 9 10.5 9 18.5 9 24 12.5 27.5 16 29l1.5 13h13L32 29c3.5-1.5 7-5 7-10.5C39 10.5 33 4 24 4z"
+              fill="#3E8E41"
+            />
+            <rect x="21.5" y="26" width="5" height="16" rx="2" fill="#4B3321" />
+          </svg>
+          <h2 class="font-display text-3xl mb-3">به شجره‌نامه خوش آمدید</h2>
+          <p class="text-cream-100/75 leading-9 text-sm">
+            با موس بچرخانید، اسکرول کنید تا زوم کنید، و روی افراد کلیک کنید تا
+            داستان‌شان را ببینید.
+          </p>
+          <button id="hint-ok" class="btn-primary mt-6">شروع کاوش</button>
+        </div>
+      </div>
+
+      <!-- slide-in person panel (from the right) -->
+      <aside
+        id="tree-panel"
+        class="fixed inset-y-0 right-0 z-[60] w-[min(92vw,400px)] bg-mulberry-900/95 backdrop-blur-xl border-l border-mulberry-300/25 overflow-y-auto"
+        role="dialog"
+        aria-label="جزئیات فرد انتخاب‌شده"
+        aria-hidden="true"
+      ></aside>
+
+      <!-- WebGL / module failure fallback: nested HTML tree -->
+      <div
+        id="tree-fallback"
+        class="hidden fixed inset-0 z-30 overflow-y-auto bg-[#14081F] pt-28 pb-16 px-5"
+      >
+        <div class="max-w-3xl mx-auto">
+          <div
+            class="bg-mulberry-900/70 border border-mulberry-300/25 rounded-2xl p-5 mb-8 text-sm leading-8 text-cream-100/80"
+          >
+            نمای سه‌بعدی روی این دستگاه در دسترس نیست؛ اما شجره‌نامه را
+            می‌توانید به‌صورت فهرست ببینید:
+          </div>
+          <div id="tree-fallback-list" class="space-y-2 text-cream-100"></div>
+        </div>
+      </div>
+
+      <noscript>
+        <div
+          class="fixed inset-0 z-[80] bg-[#14081F] flex items-center justify-center p-8 text-center"
+        >
+          برای دیدن شجره‌نامه، جاوااسکریپت را روشن کنید.
+        </div>
+      </noscript>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data/village.js"></script>
+    <script src="js/data/news.js"></script>
+    <script src="js/data/elders.js"></script>
+    <script src="js/data/family.js"></script>
+    <script src="js/data/data-service.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      /* Fallback list renderer (classic script — works even if the module fails) */
+      window.__showTreeFallback = function () {
+        var wrap = document.getElementById("tree-fallback");
+        if (!wrap || wrap.dataset.shown) return;
+        wrap.dataset.shown = "1";
+        wrap.classList.remove("hidden");
+        var people = (window.VillageData && VillageData.family) || [];
+        var byParent = {};
+        people.forEach(function (p) {
+          (byParent[p.parent_id] = byParent[p.parent_id] || []).push(p);
+        });
+        function node(p, depth) {
+          var years = p.death_year
+            ? VUtils.toFa(p.birth_year) + "–" + VUtils.toFa(p.death_year)
+            : VUtils.toFa(p.birth_year);
+          var html =
+            "<details " +
+            (depth < 2 ? "open" : "") +
+            ' class="bg-mulberry-900/50 border border-mulberry-300/20 rounded-xl">' +
+            '<summary class="p-3 cursor-pointer hover:bg-mulberry-700/40 transition-colors rounded-xl flex items-center gap-2">' +
+            '<span class="w-2.5 h-2.5 rounded-full ' +
+            (p.gender === "f" ? "bg-mulberry-300" : "bg-gold-500") +
+            '"></span>' +
+            "<b>" +
+            p.first_name +
+            " " +
+            p.last_name +
+            "</b>" +
+            '<span class="text-xs text-cream-100/50">' +
+            years +
+            "</span>" +
+            (p.death_year
+              ? '<span class="text-[10px] border border-cream-100/30 rounded px-1">درگذشته</span>'
+              : "") +
+            "</summary>" +
+            '<div class="px-4 pb-3 text-xs text-cream-100/60 leading-7">' +
+            (p.short_bio || "") +
+            (p.spouse_name ? " — همسر: " + p.spouse_name : "") +
+            "</div>";
+          var kids = byParent[p.id] || [];
+          if (kids.length)
+            html +=
+              '<div class="pr-5 pb-3 space-y-2">' +
+              kids
+                .map(function (k) {
+                  return node(k, depth + 1);
+                })
+                .join("") +
+              "</div>";
+          return html + "</details>";
+        }
+        var roots = people.filter(function (p) {
+          return p.parent_id === null;
+        });
+        document.getElementById("tree-fallback-list").innerHTML = roots
+          .map(function (r) {
+            return node(r, 0);
+          })
+          .join("");
+      };
+      /* Watchdog: if the 3D module never boots (CDN/network failure), show the fallback */
+      setTimeout(function () {
+        if (!window.__treeBooted) window.__showTreeFallback();
+      }, 4000);
+    </script>
+    <script type="module" src="js/family-tree.js"></script>
+  </body>
+</html>
