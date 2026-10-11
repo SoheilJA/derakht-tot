@@ -54,14 +54,26 @@ function groundTexture() { // dark disc with faint glowing rings — "trunk ring
     x.fillStyle = g; x.fillRect(0, 0, 512, 512);
     return new THREE.CanvasTexture(c);
 }
-function avatarTexture(p) { // initial-letter avatar when no photo
+/** نام کامل را روی آواتار می‌نویسد؛ اندازه‌ی فونت به‌اندازه‌ی نام کوچک می‌شود. */
+function drawAvatarName(x, p, size) {
+    const name = (p.first_name + ' ' + p.last_name).trim();
+    const maxW = size * 0.82;
+    let fs = Math.round(size * 0.30);
+    x.font = '900 ' + fs + 'px Vazirmatn, sans-serif';
+    while (fs > 10 && x.measureText(name).width > maxW) {
+        fs -= 2; x.font = '900 ' + fs + 'px Vazirmatn, sans-serif';
+    }
+    x.fillStyle = '#FBF6EC';
+    x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText(name, size / 2, size / 2 + fs * 0.06);
+}
+function avatarTexture(p) { // full-name avatar when no photo
     const c = document.createElement('canvas'); c.width = c.height = 256;
     const x = c.getContext('2d');
     const g = x.createLinearGradient(0, 0, 256, 256);
     g.addColorStop(0, p.gender === 'f' ? '#5A1A3F' : '#1F4D2B'); g.addColorStop(1, p.gender === 'f' ? '#8E2C63' : '#3E8E41');
     x.fillStyle = g; x.fillRect(0, 0, 256, 256);
-    x.fillStyle = '#FBF6EC'; x.font = '900 128px Vazirmatn, sans-serif';
-    x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(p.first_name.charAt(0), 128, 140);
+    drawAvatarName(x, p, 256);
     return new THREE.CanvasTexture(c);
 }
 function faYears(p) { return U.toFa(p.birth_year) + (p.death_year ? '–' + U.toFa(p.death_year) : '') + (p.death_year ? '' : ' — در قید حیات'); }
@@ -398,7 +410,7 @@ async function init() {
     function avatarDataUrl(p) {
         const c = document.createElement('canvas'); c.width = c.height = 96; const x = c.getContext('2d');
         x.fillStyle = p.gender === 'f' ? '#5A1A3F' : '#1F4D2B'; x.fillRect(0, 0, 96, 96);
-        x.fillStyle = '#FBF6EC'; x.font = '900 48px Vazirmatn,sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(p.first_name.charAt(0), 48, 54);
+        drawAvatarName(x, p, 96);
         return c.toDataURL();
     }
 
