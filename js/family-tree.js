@@ -287,24 +287,11 @@ async function init() {
         const byGen = {};
         state.nodes.forEach(n => (byGen[n.gen] = byGen[n.gen] || []).push(n));
         const tl = gsap.timeline();
-        Object.keys(byGen).map(Number).sort((a, b) => a - b).forEach(g => {
-            byGen[g].forEach(n => {
-                if (n.gen === 0) return;
-                const total = n.photo.geometry.index === null ? 1e9 : n.photo.geometry.index.count; // not used (circle has no tube draw)
-            });
-        });
-        // drawRange on branch tubes, staggered by generation
-        treeGroup.children.forEach(mesh => {
-            if (!mesh.geometry.index) return;
-            const total = mesh.geometry.index.count;
-            mesh.geometry.setDrawRange(0, 0);
-            const personId = mesh === treeGroup.children[0] ? null : null;
-        });
-        // simpler robust approach: scale-in nodes by generation + branch opacity wipe
+        // scale-in nodes by generation + branch opacity wipe
         treeGroup.userData.barkMat.opacity = 0;
         tl.to(treeGroup.userData.barkMat, { opacity: 1, duration: .9, ease: 'power1.out' }, 0);
         Object.keys(byGen).map(Number).sort((a, b) => a - b).forEach((g, gi) => {
-            tl.fromTo(byGen[g].map(n => n.group), { scale: 0 }, { scale: 1, duration: .55, stagger: .04, ease: 'back.out(2.2)' }, .12 + gi * .34);
+            tl.fromTo(byGen[g].map(n => n.group.scale), { x: 0, y: 0, z: 0 }, { x: 1, y: 1, z: 1, duration: .55, stagger: .04, ease: 'back.out(2.2)' }, .12 + gi * .34);
         });
     }
 
