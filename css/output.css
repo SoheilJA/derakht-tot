@@ -51,8 +51,6 @@
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --radius-3xl: 1.5rem;
-    --ease-out: cubic-bezier(0, 0, 0.2, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --blur-sm: 8px;
     --blur-md: 12px;
     --blur-xl: 24px;
@@ -2201,6 +2199,8 @@
   }
   #cursor-dot {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 260;
     width: 8px;
     height: 8px;
@@ -2211,6 +2211,8 @@
   }
   #cursor-ring {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 259;
     width: 38px;
     height: 38px;
