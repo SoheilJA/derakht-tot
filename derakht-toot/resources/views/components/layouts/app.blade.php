@@ -37,8 +37,7 @@
     class="{{ $bodyClass }} font-body antialiased overflow-x-hidden">
     <a href="#main" class="skip-link">رفتن به محتوای اصلی</a>
 
-    {{-- در بخش دوم مرحله ۴ که JS اضافه شد، این خط از کامنت درمیاد --}}
-    {{-- @include('partials.preloader') --}}
+    @include('partials.preloader')
 
     @if ($chrome === 'full')
         @include('partials.header')
