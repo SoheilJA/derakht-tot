@@ -1,6 +1,8 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { initHeroScene, initTeaserScene } from './three/village-scene';
+import { playHero } from './pages/home-hero';
 import { runCleanup, mountPage, listen } from './lib/lifecycle';
 import { debounce } from './lib/utils';
 import { initPreloader } from './site/preloader';
@@ -39,6 +41,11 @@ function boot() {
     initButtons();
     initReveals();
 
+    if (document.body.dataset.page === 'home') {
+        initHeroScene();
+        initTeaserScene();
+        playHero();
+    }
     mountPage(document.body.dataset.page);
 
     listen(window, 'resize', debounce(() => ScrollTrigger.refresh(), 350));
