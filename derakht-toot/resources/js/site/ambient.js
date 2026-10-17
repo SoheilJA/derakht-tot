@@ -9,9 +9,7 @@ export function initAmbient() {
     const cv = document.createElement('canvas');
     cv.id = 'ambient-canvas';
     cv.className = 'fixed inset-0 z-[5] pointer-events-none';
-    cv.style.mixBlendMode = 'multiply';
-    cv.style.opacity = '.5';
-    document.body.appendChild(cv);
+    cv.style.opacity = '.5'; document.body.appendChild(cv);
 
     const ctx = cv.getContext('2d');
     const COUNT = innerWidth < 768 ? 6 : 14;
