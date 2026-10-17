@@ -1,10 +1,17 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { runCleanup, mountPage } from './lib/lifecycle';
+import { runCleanup, mountPage, listen } from './lib/lifecycle';
+import { debounce } from './lib/utils';
 import { initPreloader } from './site/preloader';
 import { initNavbar } from './site/navbar';
 import { initMobileMenu } from './site/mobile-menu';
+import { initCursor } from './site/cursor';
+import { initTrunk } from './site/trunk';
+import { initAmbient } from './site/ambient';
+import { initDividers } from './site/dividers';
+import { initButtons } from './site/buttons';
+import { initReveals } from './site/reveals';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,14 +21,27 @@ window.ScrollTrigger = ScrollTrigger;
 let firstLoad = true;
 
 function boot() {
+    const minimal = document.body.dataset.chrome === 'minimal';
+
     initPreloader(firstLoad);
     firstLoad = false;
 
     initNavbar();
     initMobileMenu();
+    initCursor();
+
+    if (!minimal) {
+        initTrunk();
+        initAmbient();
+    }
+
+    initDividers();
+    initButtons();
+    initReveals();
 
     mountPage(document.body.dataset.page);
 
+    listen(window, 'resize', debounce(() => ScrollTrigger.refresh(), 350));
     ScrollTrigger.refresh();
 }
 
@@ -33,3 +53,6 @@ document.addEventListener('livewire:navigate', () => {
 
 // بعد از ورود به هر صفحه (شامل بارگذاری اول)
 document.addEventListener('livewire:navigated', boot);
+
+// بعد از لود کامل تصاویر، محاسبات ScrollTrigger دقیق بشن
+window.addEventListener('load', () => ScrollTrigger.refresh());
