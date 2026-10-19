@@ -15,16 +15,28 @@ class Elder extends Model
         'first_name',
         'last_name',
         'title',
+        'birth_year',
+        'death_year',
+        'birthplace',
+        'profession',
         'photo',
         'summary',
         'bio',
+        'achievements',
+        'quotes',
+        'gallery',
         'sort_order',
         'is_published',
     ];
 
     protected function casts(): array
     {
-        return ['is_published' => 'boolean'];
+        return [
+            'is_published' => 'boolean',
+            'achievements' => 'array',
+            'quotes' => 'array',
+            'gallery' => 'array',
+        ];
     }
 
     public function category(): BelongsTo
