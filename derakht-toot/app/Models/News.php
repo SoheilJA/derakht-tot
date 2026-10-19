@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
+use App\Support\Fa;
 
 class News extends Model
 {
@@ -37,5 +40,10 @@ class News extends Model
     {
         return $query->where('is_published', true)
             ->where('published_at', '<=', now());
+    }
+
+    protected function publishedAtJalali(): Attribute
+    {
+        return Attribute::get(fn() => Fa::date($this->published_at));
     }
 }
