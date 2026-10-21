@@ -2,14 +2,17 @@
 
 namespace App\Enums;
 
-enum ContactMessageStatus: string
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
+enum ContactMessageStatus: string implements HasColor, HasLabel
 {
     case New = 'new';
     case Read = 'read';
-    case Replied = 'replied';
+    case Replied = 'replyed';
     case Archived = 'archived';
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match ($this) {
             self::New => 'جدید',
@@ -17,5 +20,20 @@ enum ContactMessageStatus: string
             self::Replied => 'پاسخ داده‌شده',
             self::Archived => 'بایگانی',
         };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::New => 'danger',
+            self::Read => 'info',
+            self::Replied => 'success',
+            self::Archived => 'gray',
+        };
+    }
+
+    public function label(): string
+    {
+        return $this->getLabel();
     }
 }
