@@ -1,19 +1,20 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
-import { initHeroScene, initTeaserScene } from './three/village-scene';
-import { playHero } from './pages/home-hero';
-import { runCleanup, mountPage, listen } from './lib/lifecycle';
-import { debounce } from './lib/utils';
-import { initPreloader } from './site/preloader';
-import { initNavbar } from './site/navbar';
-import { initMobileMenu } from './site/mobile-menu';
-import { initCursor } from './site/cursor';
-import { initTrunk } from './site/trunk';
-import { initAmbient } from './site/ambient';
-import { initDividers } from './site/dividers';
-import { initButtons } from './site/buttons';
-import { initReveals } from './site/reveals';
+import {initHeroScene, initTeaserScene} from './three/village-scene';
+import {playHero} from './pages/home-hero';
+import {initAbout} from "./pages/home-about.js";
+import {runCleanup, mountPage, listen} from './lib/lifecycle';
+import {debounce} from './lib/utils';
+import {initPreloader} from './site/preloader';
+import {initNavbar} from './site/navbar';
+import {initMobileMenu} from './site/mobile-menu';
+import {initCursor} from './site/cursor';
+import {initTrunk} from './site/trunk';
+import {initAmbient} from './site/ambient';
+import {initDividers} from './site/dividers';
+import {initButtons} from './site/buttons';
+import {initReveals} from './site/reveals';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,6 +46,7 @@ function boot() {
         initHeroScene();
         initTeaserScene();
         playHero();
+        initAbout();
     }
     mountPage(document.body.dataset.page);
 
