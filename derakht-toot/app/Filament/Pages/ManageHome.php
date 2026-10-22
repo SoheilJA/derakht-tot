@@ -1,0 +1,119 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Settings\HomeSettings;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Pages\SettingsPage;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+
+class ManageHome extends SettingsPage
+{
+    protected static string $settings = HomeSettings::class;
+
+    protected static ?string $navigationLabel = 'صفحه اصلی';
+
+    protected static ?string $title = 'محتوای صفحه اصلی';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'محتوای سایت';
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make('بخش اصلی (هیرو)')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('hero_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('hero_title')
+                            ->label('عنوان اصلی')
+                            ->required(),
+
+                        TextInput::make('hero_subtitle')
+                            ->label('زیرعنوان')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        TextInput::make('hero_primary_button')
+                            ->label('متن دکمه‌ی اصلی')
+                            ->required(),
+
+                        TextInput::make('hero_secondary_button')
+                            ->label('متن دکمه‌ی دوم')
+                            ->required(),
+                    ]),
+
+                Section::make('درباره روستا')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('about_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('about_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        Textarea::make('about_paragraph_1')
+                            ->label('پاراگراف اول')
+                            ->rows(4)
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Textarea::make('about_paragraph_2')
+                            ->label('پاراگراف دوم')
+                            ->rows(4)
+                            ->required()
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('تصاویر بخش درباره روستا')
+                    ->columns(2)
+                    ->schema([
+                        FileUpload::make('about_image_1')
+                            ->label('تصویر اول')
+                            ->image()
+                            ->disk('public')
+                            ->directory('home')
+                            ->visibility('public'),
+
+                        TextInput::make('about_image_1_alt')
+                            ->label('توضیح تصویر اول (برای نابینایان و سئو)')
+                            ->required(),
+
+                        FileUpload::make('about_image_2')
+                            ->label('تصویر دوم')
+                            ->image()
+                            ->disk('public')
+                            ->directory('home')
+                            ->visibility('public'),
+
+                        TextInput::make('about_image_2_alt')
+                            ->label('توضیح تصویر دوم')
+                            ->required(),
+
+                        FileUpload::make('about_image_3')
+                            ->label('تصویر سوم')
+                            ->image()
+                            ->disk('public')
+                            ->directory('home')
+                            ->visibility('public'),
+
+                        TextInput::make('about_image_3_alt')
+                            ->label('توضیح تصویر سوم')
+                            ->required(),
+                    ]),
+            ]);
+    }
+}
