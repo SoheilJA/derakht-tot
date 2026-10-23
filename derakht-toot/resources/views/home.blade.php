@@ -107,11 +107,47 @@
                     <p class="leading-9 text-bark-700 mb-4" data-reveal>{{ $home->about_paragraph_1 }}</p>
                     <p class="leading-9 text-bark-700" data-reveal>{{ $home->about_paragraph_2 }}</p>
 
-                    {{-- لیست ویژگی‌ها: مرحله‌ی بعد --}}
+                    {{-- لیست ویژگی‌ها --}}
+                    @if ($facts->isNotEmpty())
+                        <ul class="mt-8 space-y-4" id="facts">
+                            @foreach ($facts as $fact)
+                                <li class="flex items-start gap-3" data-reveal="{{ $loop->index * 0.08 }}">
+                                    <span
+                                        class="shrink-0 w-10 h-10 rounded-full bg-leaf-900 text-leaf-300 flex items-center justify-center">
+                                        {!! $fact->icon->svg(22, 1.7) !!}
+                                    </span>
+                                    <div>
+                                        <b class="block text-bark-900">{{ $fact->title }}</b>
+                                        <span class="text-sm text-bark-700/85 leading-7">{{ $fact->text }}</span>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+
                 </div>
             </div>
 
-            {{-- ردیف آمار: مرحله‌ی بعد --}}
+            {{-- ردیف آمار --}}
+            @if ($stats->isNotEmpty())
+                <div class="container mx-auto px-5 md:px-8 mt-16">
+                    <div id="stats-row" class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+                        @foreach ($stats as $stat)
+                            <div class="stat-card bg-cream-100 border border-sand-300 rounded-3xl px-4 py-6 text-center"
+                                 data-reveal>
+                                <div class="font-display text-3xl md:text-4xl text-mulberry-700">
+                                    <span class="stat-num"
+                                          data-target="{{ $stat->value }}">{{ \App\Support\Fa::digits($stat->value) }}</span>@if ($stat->suffix)
+                                        <span
+                                            class="text-lg text-mulberry-300 font-body"> {{ $stat->suffix }}</span>
+                                    @endif
+                                </div>
+                                <div class="text-xs md:text-sm text-bark-700/70 mt-1">{{ $stat->label }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </section>
 
         <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>

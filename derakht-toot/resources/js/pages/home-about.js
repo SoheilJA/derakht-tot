@@ -1,9 +1,39 @@
+import anime from 'animejs';
 import gsap from 'gsap';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import {listen} from '../lib/lifecycle';
-import {qsa, reduced} from '../lib/utils';
+import {qs, qsa, reduced, toFa} from '../lib/utils';
+
+function initStats() {
+    const row = qs('#stats-row');
+    if (!row) return;
+
+    ScrollTrigger.create({
+        trigger: row,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+            qsa('.stat-num', row).forEach((el) => {
+                const o = {v: 0};
+                anime({
+                    targets: o,
+                    v: +el.dataset.target,
+                    round: 1,
+                    duration: 1800,
+                    easing: 'easeOutExpo',
+                    update: () => {
+                        el.textContent = toFa(o.v);
+                    },
+                });
+            });
+        },
+    });
+}
 
 export function initAbout() {
     if (reduced()) return;
+
+    initStats();
 
     // پارالکس کلاژ تصاویر
     qsa('#about-collage [data-parallax]').forEach((el) => {
