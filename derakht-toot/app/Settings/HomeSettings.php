@@ -35,6 +35,11 @@ class HomeSettings extends Settings
     public string $history_title;
     public string $history_description;
 
+    // سنت‌ها و محصولات
+    public string $traditions_kicker;
+    public string $traditions_title;
+    public string $traditions_description;
+
     public static function group(): string
     {
         return 'home';

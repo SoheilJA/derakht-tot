@@ -7,6 +7,7 @@ use App\Models\Stat;
 use Illuminate\Database\Seeder;
 use App\Models\GalleryItem;
 use App\Models\TimelineEvent;
+use App\Models\Tradition;
 
 class VillageContentSeeder extends Seeder
 {
@@ -16,6 +17,7 @@ class VillageContentSeeder extends Seeder
         $this->seedStats();
         $this->seedGallery();
         $this->seedTimeline();
+        $this->seedTraditions();
     }
 
     private function seedFacts(): void
@@ -112,6 +114,24 @@ class VillageContentSeeder extends Seeder
 
         foreach ($events as $event) {
             TimelineEvent::create($event);
+        }
+    }
+
+    private function seedTraditions(): void
+    {
+        if (Tradition::exists()) {
+            return;
+        }
+
+        $items = [
+            ['icon' => 'dried', 'title' => 'توت‌های خشک', 'text' => 'هر تیرماه، حیاط‌ها رونق می‌گیرد؛ توت‌ها را پهن می‌کنند و خشکِ شیرینِ آن، سوغات همه‌فصل روستاست.'],
+            ['icon' => 'silk', 'title' => 'ابریشم', 'text' => 'از برگ توت تا نخ ابریشم؛ هنری که مادران به دختران سپرده‌اند و هنوز در کارگاه خانگی نفس می‌کشد.'],
+            ['icon' => 'craft', 'title' => 'صنایع دستی', 'text' => 'قالی با نقش توت، حصیر با بافت مرداب، و سفالِ خام؛ دست‌های روستا همیشه چیزی برای گفتن دارد.'],
+            ['icon' => 'ritual', 'title' => 'آیین‌ها', 'text' => 'نوروزخوانی در اسفند، سفره‌ی هفت‌سین جمعی و «جشن شربت توت» در تیر؛ تقویمی که با شادی گره خورده است.'],
+        ];
+
+        foreach ($items as $index => $item) {
+            Tradition::create($item + ['sort_order' => $index + 1]);
         }
     }
 }

@@ -145,6 +145,21 @@ class ManageHome extends SettingsPage
                             ->rows(3)
                             ->required(),
                     ]),
+                Section::make('بخش سنت‌ها و محصولات')
+                    ->schema([
+                        TextInput::make('traditions_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('traditions_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        Textarea::make('traditions_description')
+                            ->label('توضیح کوتاه')
+                            ->rows(3)
+                            ->required(),
+                    ]),
             ]);
     }
 }
