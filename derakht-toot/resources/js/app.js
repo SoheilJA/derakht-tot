@@ -16,6 +16,7 @@ import {initDividers} from './site/dividers';
 import {initButtons} from './site/buttons';
 import {initReveals} from './site/reveals';
 import { initGallery } from './pages/home-gallery';
+import { initTimeline } from './pages/home-timeline';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,6 +50,7 @@ function boot() {
         playHero();
         initAbout();
         initGallery();
+        initTimeline();
     }
     mountPage(document.body.dataset.page);
 

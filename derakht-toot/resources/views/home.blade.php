@@ -196,5 +196,42 @@
 
             <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>
         @endif
+
+        {{-- ============ D) تاریخچه (تنه‌ی در حال رشد) ============ --}}
+        @if ($timeline->isNotEmpty())
+            <section id="history" class="bg-cream-50 py-20 md:py-28">
+                <div class="container mx-auto px-5 md:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-16">
+                        <p class="text-mulberry-500 text-sm tracking-[.3em] mb-3 font-bold" data-reveal>
+                            {{ $home->history_kicker }}
+                        </p>
+                        <h2 class="font-display text-4xl md:text-5xl text-bark-900 mb-5" data-reveal>
+                            {{ $home->history_title }}
+                        </h2>
+                        <p class="leading-9 text-bark-700" data-reveal>{{ $home->history_description }}</p>
+                    </div>
+
+                    <div id="timeline" class="relative">
+                        @foreach ($timeline as $event)
+                            <div
+                                class="tl-row flex {{ $loop->even ? 'justify-start' : 'justify-start md:justify-end' }}">
+                                <article
+                                    class="tl-card relative z-10 w-full md:w-[44%] mb-10 md:mb-16 mr-12 md:mr-0 bg-cream-50 border border-sand-300 rounded-[26px] p-6 shadow-[0_20px_50px_-30px_rgba(74,51,33,.5)]">
+                                    <div class="flex items-baseline gap-3 mb-1">
+                                        <span class="tl-year font-display text-4xl text-mulberry-500"
+                                              data-year="{{ $event->year }}">{{ \App\Support\Fa::digits($event->year) }}</span>
+                                        <span class="text-xs text-bark-500">شمسی</span>
+                                    </div>
+                                    <h3 class="font-display text-2xl text-bark-900 mb-2">{{ $event->title }}</h3>
+                                    <p class="text-bark-700/90 leading-8 text-sm md:text-base">{{ $event->text }}</p>
+                                </article>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>
+        @endif
     </main>
 </x-layouts.app>
