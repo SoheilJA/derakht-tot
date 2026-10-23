@@ -6,6 +6,7 @@ use App\Settings\HomeSettings;
 use Illuminate\Support\Facades\Route;
 use App\Models\GalleryItem;
 use App\Models\TimelineEvent;
+use App\Models\Tradition;
 
 Route::get('/', function (HomeSettings $home) {
     return view('home', [
@@ -14,5 +15,6 @@ Route::get('/', function (HomeSettings $home) {
         'stats' => Stat::visible()->get(),
         'galleryItems' => GalleryItem::visible()->get(),
         'timeline' => TimelineEvent::visible()->get(),
+        'traditions' => Tradition::visible()->get(),
     ]);
 })->name('home');

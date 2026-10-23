@@ -17,6 +17,7 @@ import {initButtons} from './site/buttons';
 import {initReveals} from './site/reveals';
 import { initGallery } from './pages/home-gallery';
 import { initTimeline } from './pages/home-timeline';
+import { initTraditions } from './pages/home-traditions';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,6 +52,7 @@ function boot() {
         initAbout();
         initGallery();
         initTimeline();
+        initTraditions();
     }
     mountPage(document.body.dataset.page);
 

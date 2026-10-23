@@ -233,5 +233,46 @@
 
             <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>
         @endif
+
+        {{-- ============ E) سنت‌ها و محصولات ============ --}}
+        @if ($traditions->isNotEmpty())
+            <section id="traditions" class="relative bg-leaf-900 py-20 md:py-28 overflow-hidden">
+                <div class="container mx-auto px-5 md:px-8 relative">
+                    {{-- رشته‌ی ابریشمی که با اسکرول کشیده می‌شود --}}
+                    <svg class="absolute hidden md:block inset-0 w-full h-full pointer-events-none"
+                         viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+                        <path id="silk-path" d="M40,90 C220,180 280,40 500,120 S760,200 960,80" fill="none"
+                              stroke="#D4A24C" stroke-width="1.5" stroke-dasharray="7 7" opacity=".8"/>
+                    </svg>
+
+                    <div class="relative text-center mb-14">
+                        <p class="text-leaf-300 text-sm tracking-[.3em] mb-3 font-bold" data-reveal>
+                            {{ $home->traditions_kicker }}
+                        </p>
+                        <h2 class="font-display text-4xl md:text-5xl text-cream-50 mb-5" data-reveal>
+                            {{ $home->traditions_title }}
+                        </h2>
+                        <p class="leading-9 text-cream-100/70 max-w-xl mx-auto" data-reveal>
+                            {{ $home->traditions_description }}
+                        </p>
+                    </div>
+
+                    <div id="traditions-grid" class="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        @foreach ($traditions as $tradition)
+                            <article
+                                class="trad-card group bg-leaf-900/60 backdrop-blur-sm border border-leaf-700/60 rounded-[26px] p-6 text-center"
+                                data-reveal="{{ $loop->index * 0.08 }}">
+                                <div
+                                    class="trad-icon w-16 h-16 mx-auto rounded-full bg-mulberry-900 border border-gold-500/30 text-gold-500 flex items-center justify-center mb-4 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
+                                    {!! $tradition->icon->svg(30, 1.6) !!}
+                                </div>
+                                <h3 class="font-display text-2xl text-cream-50 mb-2">{{ $tradition->title }}</h3>
+                                <p class="text-sm text-cream-100/65 leading-7">{{ $tradition->text }}</p>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
     </main>
 </x-layouts.app>
