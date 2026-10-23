@@ -149,8 +149,52 @@
                 </div>
             @endif
         </section>
-
         <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>
+        {{-- ============ C) گالری (اسکرول افقی پین‌شده) ============ --}}
+        @if ($galleryItems->isNotEmpty())
+            <section id="gallery" class="bg-mulberry-900 py-20 md:py-24 overflow-hidden">
+                <div
+                    class="container mx-auto px-5 md:px-8 mb-10 flex items-end justify-between flex-wrap gap-4">
+                    <div>
+                        <p class="text-gold-500 text-sm tracking-[.3em] mb-3 font-bold" data-reveal>
+                            {{ $home->gallery_kicker }}
+                        </p>
+                        <h2 class="font-display text-4xl md:text-5xl text-cream-50" data-reveal>
+                            {{ $home->gallery_title }}
+                        </h2>
+                    </div>
+                    <p class="text-cream-100/60 text-sm max-w-xs leading-7" data-reveal>
+                        {{ $home->gallery_description }}
+                    </p>
+                </div>
 
+                <div id="gallery-pin" class="overflow-hidden max-md:overflow-x-auto max-md:snap-x">
+                    <div id="gallery-track" class="flex gap-5 md:gap-8 px-5 md:px-16 w-max max-md:pb-4">
+                        @foreach ($galleryItems as $item)
+                            <figure
+                                class="g-card group relative shrink-0 w-[78vw] sm:w-[420px] rounded-[26px] overflow-hidden shadow-2xl cursor-pointer max-md:snap-center"
+                                data-cursor="view" data-gi="{{ $loop->index }}"
+                                data-caption="{{ $item->title }}{{ $item->description ? ' — '.$item->description : '' }}"
+                                tabindex="0" role="button" aria-label="بزرگ‌نمایی {{ $item->title }}">
+                                <div class="h-[56vh] overflow-hidden">
+                                    <img src="{{ $item->image_url }}" alt="{{ $item->alt ?: $item->title }}"
+                                         loading="lazy"
+                                         class="g-img w-full h-full object-cover scale-110 transition-transform duration-[900ms] group-hover:scale-125">
+                                </div>
+                                <figcaption
+                                    class="absolute inset-x-0 bottom-0 p-5 pt-14 bg-gradient-to-t from-black/75 to-transparent text-cream-50">
+                                    <h3 class="font-display text-2xl">{{ $item->title }}</h3>
+                                    @if ($item->description)
+                                        <p class="text-sm text-cream-100/75">{{ $item->description }}</p>
+                                    @endif
+                                </figcaption>
+                            </figure>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+            <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>
+        @endif
     </main>
 </x-layouts.app>

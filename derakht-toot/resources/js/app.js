@@ -15,6 +15,7 @@ import {initAmbient} from './site/ambient';
 import {initDividers} from './site/dividers';
 import {initButtons} from './site/buttons';
 import {initReveals} from './site/reveals';
+import { initGallery } from './pages/home-gallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,6 +48,7 @@ function boot() {
         initTeaserScene();
         playHero();
         initAbout();
+        initGallery();
     }
     mountPage(document.body.dataset.page);
 
