@@ -30,6 +30,11 @@ class HomeSettings extends Settings
     public string $gallery_title;
     public string $gallery_description;
 
+    // تاریخچه
+    public string $history_kicker;
+    public string $history_title;
+    public string $history_description;
+
     public static function group(): string
     {
         return 'home';

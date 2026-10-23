@@ -130,6 +130,21 @@ class ManageHome extends SettingsPage
                             ->rows(3)
                             ->required(),
                     ]),
+                Section::make('بخش تاریخچه')
+                    ->schema([
+                        TextInput::make('history_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('history_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        Textarea::make('history_description')
+                            ->label('توضیح کوتاه')
+                            ->rows(3)
+                            ->required(),
+                    ]),
             ]);
     }
 }
