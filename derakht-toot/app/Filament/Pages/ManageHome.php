@@ -114,6 +114,22 @@ class ManageHome extends SettingsPage
                             ->label('توضیح تصویر سوم')
                             ->required(),
                     ]),
+
+                Section::make('بخش گالری')
+                    ->schema([
+                        TextInput::make('gallery_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('gallery_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        Textarea::make('gallery_description')
+                            ->label('توضیح کوتاه')
+                            ->rows(3)
+                            ->required(),
+                    ]),
             ]);
     }
 }

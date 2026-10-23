@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Fact;
 use App\Models\Stat;
 use Illuminate\Database\Seeder;
+use App\Models\GalleryItem;
 
 class VillageContentSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class VillageContentSeeder extends Seeder
     {
         $this->seedFacts();
         $this->seedStats();
+        $this->seedGallery();
     }
 
     private function seedFacts(): void
@@ -64,6 +66,28 @@ class VillageContentSeeder extends Seeder
 
         foreach ($stats as $index => $stat) {
             Stat::create($stat + ['sort_order' => $index + 1]);
+        }
+    }
+
+    private function seedGallery(): void
+    {
+        if (GalleryItem::exists()) {
+            return;
+        }
+
+        $items = [
+            ['title' => 'توتستان سپیده‌دم', 'description' => 'نخستین نور روی برگ‌های توت', 'alt' => 'توتستان روستا در نور صبح'],
+            ['title' => 'کوچه‌های سنگی', 'description' => 'پس‌کوچه‌هایی که بوی نان دارند', 'alt' => 'کوچه سنگ‌فرش روستا'],
+            ['title' => 'سرِ قنات', 'description' => 'آبی که از دل کوه می‌آید', 'alt' => 'دهانه قنات قدیمی روستا'],
+            ['title' => 'روز برداشت', 'description' => 'دست‌های رنگ‌گرفته از توت', 'alt' => 'برداشت توت در روستا'],
+            ['title' => 'سرای ابریشم', 'description' => 'کارگاه خانگی ریسندگی', 'alt' => 'کارگاه ابریشم‌کشی روستا'],
+            ['title' => 'مدرسه کهن', 'description' => 'کلاسی که چند نسل در آن نشستند', 'alt' => 'ساختمان قدیمی مدرسه روستا'],
+            ['title' => 'غروب از بلندی', 'description' => 'روستا زیر نور طلایی', 'alt' => 'چشم‌انداز روستا هنگام غروب'],
+            ['title' => 'دارِ قالی', 'description' => 'نقش توت، نقش خانه‌ها', 'alt' => 'دار قالی‌بافی در روستا'],
+        ];
+
+        foreach ($items as $index => $item) {
+            GalleryItem::create($item + ['sort_order' => $index + 1]);
         }
     }
 }
