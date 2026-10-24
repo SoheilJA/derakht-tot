@@ -1,0 +1,152 @@
+@php
+    $siteName = app(\App\Settings\SiteSettings::class)->site_name;
+    $home = app(\App\Settings\HomeSettings::class);
+@endphp
+
+<x-layouts.app :title="'شجره‌نامه سه‌بعدی | '.$siteName" :description="$home->tree_description" page="family"
+               nav="family" chrome="minimal" themeColor="#14081F" bodyClass="bg-[#14081F] text-cream-50">
+
+    {{-- نوار بالای صفحه (این صفحه فراگیر است و هدر و فوتر عادی ندارد) --}}
+    <header class="fixed top-0 inset-x-0 z-50">
+        <div class="container mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+            <a href="{{ url('/') }}" class="flex items-center gap-2.5 group">
+                <svg width="30" height="30" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <path
+                        d="M24 4C15 4 9 10.5 9 18.5 9 24 12.5 27.5 16 29l1.5 13h13L32 29c3.5-1.5 7-5 7-10.5C39 10.5 33 4 24 4z"
+                        fill="#3E8E41" />
+                    <rect x="21.5" y="26" width="5" height="16" rx="2" fill="#4B3321" />
+                </svg>
+                <span class="font-display text-xl group-hover:text-gold-500 transition-colors">{{ $siteName }}</span>
+            </a>
+            <a href="{{ url('/') }}"
+               class="text-sm text-cream-100/70 hover:text-gold-500 transition-colors inline-flex items-center gap-1.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M11 18l-6-6 6-6" />
+                </svg>
+                بازگشت به روستا
+            </a>
+        </div>
+    </header>
+
+    <main id="main" class="relative">
+        <h1 class="sr-only">شجره‌نامه روستای {{ $siteName }} — نمای سه‌بعدی</h1>
+
+        {{-- داده‌ی افراد برای جاوااسکریپت --}}
+        <script type="application/json" id="tree-data">@json($people)</script>
+
+        <div id="tree-stage" class="fixed inset-0" aria-label="نمای سه‌بعدی شجره‌نامه"></div>
+
+        {{-- انتخاب خانواده (وقتی بیش از یک خانواده هست) --}}
+        <div id="family-chips" class="fixed top-20 inset-x-0 z-40 flex flex-wrap justify-center gap-2 px-4"></div>
+
+        {{-- جست‌وجو --}}
+        <div class="fixed top-20 md:top-24 right-4 md:right-8 z-40 w-64" id="tree-search-wrap">
+            <div class="relative">
+                <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 text-cream-100/50" width="15" height="15"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="M21 21l-4.3-4.3" />
+                </svg>
+                <input id="tree-search" type="search" autocomplete="off" placeholder="جست‌وجوی نام در شجره‌نامه…"
+                       class="w-full bg-mulberry-900/70 backdrop-blur-md border border-mulberry-300/30 rounded-xl py-2.5 pr-10 pl-3 text-sm text-cream-50 placeholder:text-cream-100/40 focus:outline-none focus:border-gold-500 transition-colors"
+                       aria-label="جست‌وجو در شجره‌نامه">
+            </div>
+            <div id="search-results"
+                 class="hidden mt-2 bg-mulberry-900/90 backdrop-blur-md border border-mulberry-300/30 rounded-xl overflow-hidden max-h-64 overflow-y-auto">
+            </div>
+        </div>
+
+        {{-- نوار ابزار --}}
+        <div class="fixed bottom-5 inset-x-0 z-40 flex flex-wrap justify-center gap-2 px-4" role="toolbar"
+             aria-label="ابزارهای شجره‌نامه">
+            <button class="tree-tool" data-action="reset" title="بازنشانی نما" aria-label="بازنشانی نما">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 109-9 9.74 9.74 0 00-6.7 3L3 8" />
+                    <path d="M3 3v5h5" />
+                </svg>
+            </button>
+            <button class="tree-tool on" data-action="rotate" title="چرخش خودکار" aria-label="چرخش خودکار">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a9 9 0 11-3-6.7" />
+                    <path d="M21 3v5h-5" />
+                </svg>
+            </button>
+            <button class="tree-tool on" data-action="labels" title="نمایش نام‌ها" aria-label="نمایش نام‌ها">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7V5h16v2M12 5v14M9 19h6" />
+                </svg>
+            </button>
+            <button class="tree-tool" data-action="rings" title="حلقه‌های نسل" aria-label="حلقه‌های نسل">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="12" cy="12" r="9" />
+                </svg>
+            </button>
+            <button class="tree-tool" data-action="layout" title="تغییر آرایش" aria-label="تغییر آرایش">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="6" cy="6" r="2" />
+                    <circle cx="12" cy="12" r="2" />
+                    <circle cx="18" cy="6" r="2" />
+                    <circle cx="6" cy="18" r="2" />
+                    <circle cx="18" cy="18" r="2" />
+                    <path d="M7.5 7.5l3 3M16.5 7.5l-3 3M7.5 16.5l3-3M16.5 16.5l-3-3" />
+                </svg>
+            </button>
+            <button class="tree-tool" data-action="fullscreen" title="تمام‌صفحه" aria-label="تمام‌صفحه">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" />
+                </svg>
+            </button>
+        </div>
+
+        {{-- راهنمای نسل‌ها --}}
+        <div id="legend"
+             class="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-40 bg-mulberry-900/60 backdrop-blur-md border border-mulberry-300/25 rounded-2xl p-3 space-y-0.5 hidden md:block"
+             aria-label="نسل‌ها"></div>
+
+        {{-- راهنمای بار اول --}}
+        <div id="tree-hint"
+             class="fixed inset-0 z-[70] bg-[#14081F]/80 backdrop-blur-sm flex items-center justify-center px-6 transition-opacity duration-700">
+            <div class="bg-mulberry-900/90 border border-mulberry-300/30 rounded-3xl p-8 md:p-10 text-center max-w-md">
+                <svg width="56" height="56" viewBox="0 0 48 48" fill="none" class="mx-auto mb-4" aria-hidden="true">
+                    <path
+                        d="M24 4C15 4 9 10.5 9 18.5 9 24 12.5 27.5 16 29l1.5 13h13L32 29c3.5-1.5 7-5 7-10.5C39 10.5 33 4 24 4z"
+                        fill="#3E8E41" />
+                    <rect x="21.5" y="26" width="5" height="16" rx="2" fill="#4B3321" />
+                </svg>
+                <h2 class="font-display text-3xl mb-3">به شجره‌نامه خوش آمدید</h2>
+                <p class="text-cream-100/75 leading-9 text-sm">
+                    با موس بچرخانید، اسکرول کنید تا زوم کنید، و روی افراد کلیک کنید تا داستان‌شان را ببینید.
+                </p>
+                <button id="hint-ok" class="btn-primary mt-6">شروع کاوش</button>
+            </div>
+        </div>
+
+        {{-- پنل جزئیات فرد (از سمت راست) --}}
+        <aside id="tree-panel"
+               class="fixed inset-y-0 right-0 z-[60] w-[min(92vw,400px)] bg-mulberry-900/95 backdrop-blur-xl border-l border-mulberry-300/25 overflow-y-auto"
+               role="dialog" aria-label="جزئیات فرد انتخاب‌شده" aria-hidden="true"></aside>
+
+        {{-- وقتی هنوز کسی ثبت نشده --}}
+        <div id="tree-empty" class="hidden fixed inset-0 z-30 flex items-center justify-center px-6 text-center">
+            <p class="text-cream-100/75 leading-9">هنوز کسی در شجره‌نامه ثبت نشده است.</p>
+        </div>
+
+        {{-- جایگزین وقتی نمای سه‌بعدی در دسترس نیست: فهرست تودرتو --}}
+        <div id="tree-fallback" class="hidden fixed inset-0 z-30 overflow-y-auto bg-[#14081F] pt-28 pb-16 px-5">
+            <div class="max-w-3xl mx-auto">
+                <div
+                    class="bg-mulberry-900/70 border border-mulberry-300/25 rounded-2xl p-5 mb-8 text-sm leading-8 text-cream-100/80">
+                    نمای سه‌بعدی روی این دستگاه در دسترس نیست؛ اما شجره‌نامه را می‌توانید به‌صورت فهرست ببینید:
+                </div>
+                <div id="tree-fallback-list" class="space-y-2 text-cream-100"></div>
+            </div>
+        </div>
+
+        <noscript>
+            <div class="fixed inset-0 z-[80] bg-[#14081F] flex items-center justify-center p-8 text-center">
+                برای دیدن شجره‌نامه، جاوااسکریپت را روشن کنید.
+            </div>
+        </noscript>
+    </main>
+</x-layouts.app>
