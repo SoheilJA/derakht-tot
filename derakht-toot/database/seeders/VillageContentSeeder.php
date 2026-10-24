@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 use App\Models\GalleryItem;
 use App\Models\TimelineEvent;
 use App\Models\Tradition;
+use App\Models\Elder;
+use App\Models\ElderCategory;
 
 class VillageContentSeeder extends Seeder
 {
@@ -18,6 +20,7 @@ class VillageContentSeeder extends Seeder
         $this->seedGallery();
         $this->seedTimeline();
         $this->seedTraditions();
+        $this->seedElders();
     }
 
     private function seedFacts(): void
@@ -132,6 +135,53 @@ class VillageContentSeeder extends Seeder
 
         foreach ($items as $index => $item) {
             Tradition::create($item + ['sort_order' => $index + 1]);
+        }
+    }
+
+    private function seedElders(): void
+    {
+        if (Elder::exists()) {
+            return;
+        }
+
+        // دسته‌ها: اگر قبلاً با همین نام ساخته شده باشند، دوباره ساخته نمی‌شوند
+        $categories = [];
+        foreach ([
+                     ['name' => 'کدخدا', 'slug' => 'kadkhoda'],
+                     ['name' => 'هنرمند', 'slug' => 'honarmand'],
+                     ['name' => 'معلم', 'slug' => 'moalem'],
+                     ['name' => 'کشاورز', 'slug' => 'keshavarz'],
+                     ['name' => 'روحانی', 'slug' => 'rohani'],
+                 ] as $index => $category) {
+            $categories[$category['name']] = ElderCategory::firstOrCreate(
+                ['name' => $category['name']],
+                ['slug' => $category['slug'], 'sort_order' => $index + 1],
+            );
+        }
+
+        $elders = [
+            ['slug' => 'haj-reza-sadeghi', 'first_name' => 'حاج رضا', 'last_name' => 'صادقی', 'title' => 'کدخدای پیشین روستا', 'birth_year' => 1299, 'death_year' => 1374, 'profession' => 'کشاورز و کدخدا', 'category' => 'کدخدا'],
+            ['slug' => 'gohar-taj-sadeghi', 'first_name' => 'گوهر تاج', 'last_name' => 'صادقی', 'title' => 'مادرِ قالی‌بافی روستا', 'birth_year' => 1304, 'death_year' => 1391, 'profession' => 'قالی‌باف', 'category' => 'هنرمند'],
+            ['slug' => 'zahra-sadeghi', 'first_name' => 'زهرا', 'last_name' => 'صادقی', 'title' => 'بانوی نخ و نقش', 'birth_year' => 1330, 'death_year' => null, 'profession' => 'قالی‌باف و مدرس بافی', 'category' => 'هنرمند'],
+            ['slug' => 'hossein-sadeghi', 'first_name' => 'حسین', 'last_name' => 'صادقی', 'title' => 'معلم بازنشسته و خاطره‌نویس', 'birth_year' => 1334, 'death_year' => 1397, 'profession' => 'معلم ابتدایی', 'category' => 'معلم'],
+            ['slug' => 'ali-sadeghi', 'first_name' => 'علی', 'last_name' => 'صادقی', 'title' => 'پاسدارِ توتستان‌ها', 'birth_year' => 1351, 'death_year' => null, 'profession' => 'مهندس کشاورزی', 'category' => 'کشاورز'],
+            ['slug' => 'ghorban-rostami', 'first_name' => 'قربان', 'last_name' => 'رستمی', 'title' => 'پیرِ باغبان', 'birth_year' => 1319, 'death_year' => null, 'profession' => 'باغبان', 'category' => 'کشاورز'],
+            ['slug' => 'asadollah-moradi', 'first_name' => 'حاج اسداله', 'last_name' => 'مرادی', 'title' => 'امام جماعت پیشین روستا', 'birth_year' => 1307, 'death_year' => 1387, 'profession' => 'روحانی', 'category' => 'روحانی'],
+            ['slug' => 'ahmad-moradi', 'first_name' => 'احمد', 'last_name' => 'مرادی', 'title' => 'معلم قرآن و ادبیات', 'birth_year' => 1332, 'death_year' => null, 'profession' => 'معلم', 'category' => 'معلم'],
+            ['slug' => 'mahboobeh-moradi', 'first_name' => 'محبوبه', 'last_name' => 'مرادی', 'title' => 'قلم‌زن و نگارگر', 'birth_year' => 1336, 'death_year' => null, 'profession' => 'نگارگر و قلم‌زن', 'category' => 'هنرمند'],
+            ['slug' => 'ziba-farhamand', 'first_name' => 'زیبا', 'last_name' => 'فرهمند', 'title' => 'سفال‌گرِ جوان', 'birth_year' => 1364, 'death_year' => null, 'profession' => 'سفال‌گر', 'category' => 'هنرمند'],
+        ];
+
+        foreach ($elders as $index => $elder) {
+            $category = $categories[$elder['category']];
+            unset($elder['category']);
+
+            Elder::create($elder + [
+                    'elder_category_id' => $category->id,
+                    'birthplace' => 'درخت توت',
+                    'sort_order' => $index + 1,
+                    'is_published' => true,
+                ]);
         }
     }
 }

@@ -40,6 +40,16 @@ class HomeSettings extends Settings
     public string $traditions_title;
     public string $traditions_description;
 
+    // پیش‌نمایش اخبار
+    public string $news_kicker;
+    public string $news_title;
+    public string $news_button;
+
+    // پیش‌نمایش بزرگان
+    public string $elders_kicker;
+    public string $elders_title;
+    public string $elders_button;
+
     public static function group(): string
     {
         return 'home';

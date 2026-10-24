@@ -130,6 +130,7 @@ class ManageHome extends SettingsPage
                             ->rows(3)
                             ->required(),
                     ]),
+
                 Section::make('بخش تاریخچه')
                     ->schema([
                         TextInput::make('history_kicker')
@@ -145,7 +146,8 @@ class ManageHome extends SettingsPage
                             ->rows(3)
                             ->required(),
                     ]),
-                Section::make('بخش سنت‌ها و محصولات')
+
+                Section::make('بخش سنت‌ ها و محصولات')
                     ->schema([
                         TextInput::make('traditions_kicker')
                             ->label('متن کوچک بالای عنوان')
@@ -158,6 +160,38 @@ class ManageHome extends SettingsPage
                         Textarea::make('traditions_description')
                             ->label('توضیح کوتاه')
                             ->rows(3)
+                            ->required(),
+                    ]),
+
+                Section::make('پیش‌ نمایش اخبار')
+                    ->columns(3)
+                    ->schema([
+                        TextInput::make('news_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('news_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        TextInput::make('news_button')
+                            ->label('متن دکمه‌ی همه اخبار')
+                            ->required(),
+                    ]),
+
+                Section::make('پیش‌ نمایش بزرگان')
+                    ->columns(3)
+                    ->schema([
+                        TextInput::make('elders_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('elders_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        TextInput::make('elders_button')
+                            ->label('متن دکمه‌ی همه بزرگان')
                             ->required(),
                     ]),
             ]);
