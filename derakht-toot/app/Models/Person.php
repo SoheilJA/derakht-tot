@@ -52,4 +52,12 @@ class Person extends Model
     {
         return Attribute::get(fn() => trim("{$this->first_name} {$this->last_name}"));
     }
+
+    /** فرزندان؛ بر اساس جنسیت، از سمت پدر یا مادر */
+    protected function children(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->gender === 'f' ? $this->childrenByMother : $this->childrenByFather
+        );
+    }
 }

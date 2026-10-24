@@ -30,6 +30,49 @@ class HomeSettings extends Settings
     public string $gallery_title;
     public string $gallery_description;
 
+    // تاریخچه
+    public string $history_kicker;
+    public string $history_title;
+    public string $history_description;
+
+    // سنت‌ها و محصولات
+    public string $traditions_kicker;
+    public string $traditions_title;
+    public string $traditions_description;
+
+    // پیش‌نمایش اخبار
+    public string $news_kicker;
+    public string $news_title;
+    public string $news_button;
+
+    // پیش‌نمایش بزرگان
+    public string $elders_kicker;
+    public string $elders_title;
+    public string $elders_button;
+
+    // نمونه‌ی شجره‌نامه
+    public string $tree_kicker;
+    public string $tree_title;
+    public string $tree_description;
+    public string $tree_button;
+
+    // تماس
+    public string $contact_kicker;
+    public string $contact_title;
+    public string $contact_description;
+    public string $contact_address;
+    public string $contact_phone;
+    public ?string $contact_email;
+    public string $contact_hours;
+    public ?string $contact_map_image;
+    public string $contact_button;
+    public string $contact_success_title;
+    public string $contact_success_text;
+
+    // سئو
+    public string $meta_title;
+    public string $meta_description;
+
     public static function group(): string
     {
         return 'home';

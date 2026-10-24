@@ -15,7 +15,13 @@ import {initAmbient} from './site/ambient';
 import {initDividers} from './site/dividers';
 import {initButtons} from './site/buttons';
 import {initReveals} from './site/reveals';
-import { initGallery } from './pages/home-gallery';
+import {initGallery} from './pages/home-gallery';
+import {initTimeline} from './pages/home-timeline';
+import {initTraditions} from './pages/home-traditions';
+import {initEldersSlider} from './pages/home-elders';
+import {initContact} from './pages/home-contact';
+import {initElderDetail} from './pages/elder-detail';
+import {initFamilyTree} from './pages/family-tree';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +55,20 @@ function boot() {
         playHero();
         initAbout();
         initGallery();
+        initTimeline();
+        initTraditions();
+        initEldersSlider();
+        initContact();
     }
+
+    if (document.body.dataset.page === 'elder') {
+        initElderDetail();
+    }
+
+    if (document.body.dataset.page === 'family') {
+        initFamilyTree();
+    }
+
     mountPage(document.body.dataset.page);
 
     listen(window, 'resize', debounce(() => ScrollTrigger.refresh(), 350));

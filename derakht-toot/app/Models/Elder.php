@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Elder extends Model
 {
@@ -47,6 +48,11 @@ class Elder extends Model
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
+    }
+
+    public function scopeVisible(Builder $query): Builder
+    {
+        return $query->where('is_published', true)->orderBy('sort_order');
     }
 
     protected function fullName(): Attribute
