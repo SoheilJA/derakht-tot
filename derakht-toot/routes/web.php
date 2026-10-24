@@ -21,4 +21,18 @@ Route::get('/', function (HomeSettings $home) {
         'latestNews' => News::published()->with('category')->latest('published_at')->take(4)->get(),
         'elders' => Elder::visible()->take(6)->get(),
     ]);
+    Route::view('/news', 'news.index')->name('news.index');
+
+    Route::get('/news/{news:slug}', function (News $news) {
+        abort_unless($news->is_published && $news->published_at?->isPast(), 404);
+
+        return view('news.show', [
+            'news' => $news->load('category'),
+            'related' => News::published()
+                ->whereKeyNot($news->getKey())
+                ->latest('published_at')
+                ->take(3)
+                ->get(),
+        ]);
+    })->name('news.show');
 })->name('home');
