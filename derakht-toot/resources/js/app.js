@@ -20,6 +20,7 @@ import { initTimeline } from './pages/home-timeline';
 import { initTraditions } from './pages/home-traditions';
 import { initEldersSlider } from './pages/home-elders';
 import { initContact } from './pages/home-contact';
+import { initElderDetail } from './pages/elder-detail';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,6 +58,9 @@ function boot() {
         initTraditions();
         initEldersSlider();
         initContact();
+    }
+    if (document.body.dataset.page === 'elder') {
+        initElderDetail();
     }
     mountPage(document.body.dataset.page);
 
