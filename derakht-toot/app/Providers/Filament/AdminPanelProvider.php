@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Filament\FontProviders\LocalFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,9 +29,23 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('درخت توت')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Yellow,
             ])
+            ->font(
+                'Vazirmatn',
+                url: asset('css/admin-font.css'),
+                provider: LocalFontProvider::class,
+            )
+            ->navigationGroups([
+                'اخبار',
+                'بزرگان روستا',
+                'شجره‌نامه',
+                'محتوای سایت',
+                'پیام‌ها',
+            ])
+            ->unsavedChangesAlerts()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
