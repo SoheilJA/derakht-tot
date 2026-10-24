@@ -1,14 +1,14 @@
 <?php
 
+use App\Models\Elder;
 use App\Models\Fact;
-use App\Models\Stat;
-use App\Settings\HomeSettings;
-use Illuminate\Support\Facades\Route;
 use App\Models\GalleryItem;
+use App\Models\News;
+use App\Models\Stat;
 use App\Models\TimelineEvent;
 use App\Models\Tradition;
-use App\Models\Elder;
-use App\Models\News;
+use App\Settings\HomeSettings;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (HomeSettings $home) {
     return view('home', [
@@ -18,14 +18,12 @@ Route::get('/', function (HomeSettings $home) {
         'galleryItems' => GalleryItem::visible()->get(),
         'timeline' => TimelineEvent::visible()->get(),
         'traditions' => Tradition::visible()->get(),
-        'latestNews' => News::published()->with('category')
-            ->latest('published_at')
-            ->take(4)
-            ->get(),
+        'latestNews' => News::published()->with('category')->latest('published_at')->take(4)->get(),
         'elders' => Elder::visible()->take(6)->get(),
     ]);
 })->name('home');
 
+/* ---------- اخبار ---------- */
 Route::view('/news', 'news.index')->name('news.index');
 
 Route::get('/news/{news:slug}', function (News $news) {
@@ -41,7 +39,7 @@ Route::get('/news/{news:slug}', function (News $news) {
     ]);
 })->name('news.show');
 
-
+/* ---------- بزرگان ---------- */
 Route::view('/elders', 'elders.index')->name('elders.index');
 
 Route::get('/elders/{elder:slug}', function (Elder $elder) {
