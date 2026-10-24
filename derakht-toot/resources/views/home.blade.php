@@ -411,5 +411,123 @@
                 </div>
             </section>
         @endif
+
+        {{-- ============ H) نمونه‌ی شجره‌نامه ============ --}}
+        <section id="tree-teaser" class="relative bg-mulberry-900 overflow-hidden">
+            <canvas id="teaser-canvas" class="absolute inset-0 w-full h-full" aria-hidden="true"></canvas>
+            <div class="absolute inset-0 bg-mulberry-900/40" aria-hidden="true"></div>
+
+            <div class="relative container mx-auto px-5 md:px-8 py-28 md:py-40 text-center">
+                <p class="text-gold-500 text-sm tracking-[.3em] mb-4 font-bold" data-reveal>
+                    {{ $home->tree_kicker }}
+                </p>
+                <h2 class="font-display text-4xl md:text-6xl text-cream-50 leading-tight mb-6" data-reveal>
+                    {!! nl2br(e($home->tree_title)) !!}
+                </h2>
+                <p class="leading-9 text-cream-100/80 max-w-xl mx-auto mb-10" data-reveal>
+                    {{ $home->tree_description }}
+                </p>
+                <a href="{{ url('/family-tree') }}" class="btn-primary text-base" data-magnetic data-reveal>
+                    {{ $home->tree_button }}
+                </a>
+            </div>
+        </section>
+
+        {{-- ============ I) تماس ============ --}}
+        <section id="contact" class="bg-cream-50 py-20 md:py-28">
+            <div class="container mx-auto px-5 md:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <p class="text-mulberry-500 text-sm tracking-[.3em] mb-3 font-bold" data-reveal>
+                        {{ $home->contact_kicker }}
+                    </p>
+                    <h2 class="font-display text-4xl md:text-5xl text-bark-900 mb-5" data-reveal>
+                        {{ $home->contact_title }}
+                    </h2>
+                    <p class="leading-9 text-bark-700" data-reveal>{{ $home->contact_description }}</p>
+                </div>
+
+                <div class="grid lg:grid-cols-5 gap-10">
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3 bg-cream-100 border border-sand-300 rounded-2xl p-4">
+                                <svg class="text-mulberry-500 shrink-0 mt-1" width="18" height="18"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M12 21s-7-6.1-7-11a7 7 0 1114 0c0 4.9-7 11-7 11z"/>
+                                    <circle cx="12" cy="10" r="2.5"/>
+                                </svg>
+                                <div>
+                                    <b class="text-sm">نشانی</b>
+                                    <p class="text-sm text-bark-700/80 leading-7">{{ $home->contact_address }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 bg-cream-100 border border-sand-300 rounded-2xl p-4">
+                                <svg class="text-mulberry-500 shrink-0 mt-1" width="18" height="18"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path
+                                        d="M5 4h4l2 5-2.5 1.5a12 12 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>
+                                </svg>
+                                <div>
+                                    <b class="text-sm">تلفن</b>
+                                    <p class="text-sm text-bark-700/80 text-right"
+                                       dir="ltr">{{ $home->contact_phone }}</p>
+                                </div>
+                            </div>
+
+                            @if ($home->contact_email)
+                                <div class="flex items-start gap-3 bg-cream-100 border border-sand-300 rounded-2xl p-4">
+                                    <svg class="text-mulberry-500 shrink-0 mt-1" width="18" height="18"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M3 6h18v12H3z"/>
+                                        <path d="M3 7l9 6 9-6"/>
+                                    </svg>
+                                    <div>
+                                        <b class="text-sm">ایمیل</b>
+                                        <p class="text-sm text-bark-700/80 text-right"
+                                           dir="ltr">{{ $home->contact_email }}</p>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="flex items-start gap-3 bg-cream-100 border border-sand-300 rounded-2xl p-4">
+                                <svg class="text-mulberry-500 shrink-0 mt-1" width="18" height="18"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <path d="M12 7v5l3 3"/>
+                                </svg>
+                                <div>
+                                    <b class="text-sm">ساعت پاسخگویی</b>
+                                    <p class="text-sm text-bark-700/80">{{ $home->contact_hours }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- نقشه: تصویر ثابت، بدون وابستگی به اینترنت --}}
+                        <div
+                            class="relative rounded-3xl overflow-hidden h-56 bg-cream-100 border border-sand-300 kilim-bg">
+                            @if ($home->contact_map_image)
+                                <img src="{{ \App\Support\Media::url($home->contact_map_image) }}"
+                                     alt="نقشه‌ی روستای درخت توت" loading="lazy"
+                                     class="absolute inset-0 w-full h-full object-cover">
+                            @else
+                                <div
+                                    class="absolute inset-0 flex flex-col items-center justify-center text-bark-700/70 gap-2">
+                                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="1.6">
+                                        <path d="M12 21s-7-6.1-7-11a7 7 0 1114 0c0 4.9-7 11-7 11z"/>
+                                        <circle cx="12" cy="10" r="2.5"/>
+                                    </svg>
+                                    <p class="text-sm">جای نقشه‌ی روستا</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-3" data-reveal>
+                        <livewire:contact-form/>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 </x-layouts.app>
