@@ -50,6 +50,25 @@ class HomeSettings extends Settings
     public string $elders_title;
     public string $elders_button;
 
+    // نمونه‌ی شجره‌نامه
+    public string $tree_kicker;
+    public string $tree_title;
+    public string $tree_description;
+    public string $tree_button;
+
+    // تماس
+    public string $contact_kicker;
+    public string $contact_title;
+    public string $contact_description;
+    public string $contact_address;
+    public string $contact_phone;
+    public ?string $contact_email;
+    public string $contact_hours;
+    public ?string $contact_map_image;
+    public string $contact_button;
+    public string $contact_success_title;
+    public string $contact_success_text;
+
     public static function group(): string
     {
         return 'home';

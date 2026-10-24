@@ -194,6 +194,91 @@ class ManageHome extends SettingsPage
                             ->label('متن دکمه‌ی همه بزرگان')
                             ->required(),
                     ]),
+
+                Section::make('نمونه‌ی شجره‌نامه')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('tree_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('tree_button')
+                            ->label('متن دکمه')
+                            ->required(),
+
+                        Textarea::make('tree_title')
+                            ->label('عنوان')
+                            ->helperText('برای رفتن به خط بعد، Enter بزنید')
+                            ->rows(2)
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Textarea::make('tree_description')
+                            ->label('توضیح')
+                            ->rows(3)
+                            ->required()
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('تماس')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('contact_kicker')
+                            ->label('متن کوچک بالای عنوان')
+                            ->required(),
+
+                        TextInput::make('contact_title')
+                            ->label('عنوان')
+                            ->required(),
+
+                        Textarea::make('contact_description')
+                            ->label('توضیح')
+                            ->rows(2)
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Textarea::make('contact_address')
+                            ->label('نشانی')
+                            ->rows(2)
+                            ->required()
+                            ->columnSpanFull(),
+
+                        TextInput::make('contact_phone')
+                            ->label('تلفن')
+                            ->required(),
+
+                        TextInput::make('contact_email')
+                            ->label('ایمیل (اختیاری)')
+                            ->email(),
+
+                        TextInput::make('contact_hours')
+                            ->label('ساعت پاسخگویی')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        FileUpload::make('contact_map_image')
+                            ->label('تصویر نقشه‌ی روستا (اختیاری)')
+                            ->helperText('تصویر ثابت نقشه؛ بدون اینترنت هم نمایش داده می‌شود')
+                            ->image()
+                            ->disk('public')
+                            ->directory('home')
+                            ->visibility('public')
+                            ->columnSpanFull(),
+
+                        TextInput::make('contact_button')
+                            ->label('متن دکمه‌ی ارسال')
+                            ->required(),
+
+                        TextInput::make('contact_success_title')
+                            ->label('عنوان پیام موفقیت')
+                            ->required(),
+
+                        Textarea::make('contact_success_text')
+                            ->label('متن پیام موفقیت')
+                            ->rows(2)
+                            ->required()
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 }
