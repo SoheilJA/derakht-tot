@@ -69,6 +69,10 @@ class HomeSettings extends Settings
     public string $contact_success_title;
     public string $contact_success_text;
 
+    // سئو
+    public string $meta_title;
+    public string $meta_description;
+
     public static function group(): string
     {
         return 'home';

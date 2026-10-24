@@ -279,6 +279,19 @@ class ManageHome extends SettingsPage
                             ->required()
                             ->columnSpanFull(),
                     ]),
+
+                Section::make('سئوی صفحه اصلی')
+                    ->schema([
+                        TextInput::make('meta_title')
+                            ->label('عنوان صفحه (نمایش در تب مرورگر و نتایج جستجو)')
+                            ->required(),
+
+                        Textarea::make('meta_description')
+                            ->label('توضیح صفحه')
+                            ->helperText('حدود ۱۵۰ نویسه')
+                            ->rows(3)
+                            ->required(),
+                    ]),
             ]);
     }
 }

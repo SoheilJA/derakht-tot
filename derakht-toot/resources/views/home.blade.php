@@ -1,6 +1,4 @@
-<x-layouts.app title="درخت توت | روستایی با ریشه‌هایی از تاریخ"
-               description="معرفی روستای درخت توت؛ تاریخچه، بزرگان، طبیعت، شجره‌نامه سه‌بعدی و اخبار روستایی در دل خراسان."
-               page="home" nav="home">
+<x-layouts.app :title="$home->meta_title" :description="$home->meta_description" page="home" nav="home">
     <main id="main">
 
         {{-- ============ A) هیرو ============ --}}
