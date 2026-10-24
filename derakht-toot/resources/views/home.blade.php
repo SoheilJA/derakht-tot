@@ -150,6 +150,7 @@
             @endif
         </section>
         <div class="branch-divider py-4 bg-cream-50" data-divider aria-hidden="true"></div>
+
         {{-- ============ C) گالری (اسکرول افقی پین‌شده) ============ --}}
         @if ($galleryItems->isNotEmpty())
             <section id="gallery" class="bg-mulberry-900 py-20 md:py-24 overflow-hidden">
@@ -270,6 +271,142 @@
                                 <p class="text-sm text-cream-100/65 leading-7">{{ $tradition->text }}</p>
                             </article>
                         @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- ============ F) پیش‌نمایش اخبار ============ --}}
+        @if ($latestNews->isNotEmpty())
+            <section id="news-preview" class="bg-cream-50 py-20 md:py-28">
+                <div class="container mx-auto px-5 md:px-8">
+                    <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
+                        <div>
+                            <p class="text-mulberry-500 text-sm tracking-[.3em] mb-3 font-bold" data-reveal>
+                                {{ $home->news_kicker }}
+                            </p>
+                            <h2 class="font-display text-4xl md:text-5xl text-bark-900" data-reveal>
+                                {{ $home->news_title }}
+                            </h2>
+                        </div>
+                        <a href="{{ url('/news') }}" wire:navigate class="btn-ghost" data-magnetic data-reveal>
+                            {{ $home->news_button }}
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M19 12H5M11 18l-6-6 6-6"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div id="home-news-grid" class="grid md:grid-cols-3 gap-6">
+                        @foreach ($latestNews as $item)
+                            @php $big = $loop->first; @endphp
+                            <a href="{{ url('/news/'.$item->slug) }}" wire:navigate
+                               class="news-card group {{ $big ? 'md:col-span-2 md:row-span-2' : '' }} relative rounded-[26px] overflow-hidden bg-mulberry-900 shadow-xl"
+                               data-cursor="view" data-reveal="{{ $loop->index * 0.07 }}">
+                                <img src="{{ \App\Support\Media::url($item->cover_image) }}"
+                                     alt="{{ $item->title }}" loading="lazy"
+                                     class="w-full h-full {{ $big ? 'min-h-[340px]' : 'h-52 md:h-full min-h-[200px]' }} object-cover opacity-80 group-hover:opacity-95 group-hover:scale-105 transition-all duration-700">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-mulberry-900/90 via-mulberry-900/20 to-transparent">
+                                </div>
+                                <div class="absolute inset-x-0 bottom-0 p-5 md:p-6 text-cream-50">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        @if ($item->category)
+                                            <span
+                                                class="text-[11px] bg-gold-500 text-mulberry-900 font-bold px-2.5 py-0.5 rounded-full">{{ $item->category->name }}</span>
+                                        @endif
+                                        <span
+                                            class="text-[11px] text-cream-100/70">{{ \App\Support\Fa::date($item->published_at) }}</span>
+                                    </div>
+                                    <h3
+                                        class="font-display {{ $big ? 'text-2xl md:text-3xl' : 'text-xl' }} leading-snug">
+                                        {{ $item->title }}</h3>
+                                    @if ($big && $item->summary)
+                                        <p class="text-sm text-cream-100/75 mt-2 leading-7 hidden md:block">
+                                            {{ $item->summary }}</p>
+                                    @endif
+                                    <span class="leaf-read inline-flex items-center gap-1.5 mt-3 text-xs text-gold-500">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M12 2C7 2 3 6.5 3 12c0 5 4 9.5 9 10 5-.5 9-5 9-10 0-5.5-4-10-9-10z"/>
+                                        </svg>
+                                        ادامه خبر
+                                    </span>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- ============ G) پیش‌نمایش بزرگان ============ --}}
+        @if ($elders->isNotEmpty())
+            <section id="elders-preview" class="bg-cream-100 py-20 md:py-28 overflow-hidden">
+                <div
+                    class="container mx-auto px-5 md:px-8 mb-10 flex items-end justify-between flex-wrap gap-4">
+                    <div>
+                        <p class="text-leaf-700 text-sm tracking-[.3em] mb-3 font-bold" data-reveal>
+                            {{ $home->elders_kicker }}
+                        </p>
+                        <h2 class="font-display text-4xl md:text-5xl text-bark-900" data-reveal>
+                            {{ $home->elders_title }}
+                        </h2>
+                    </div>
+                    <a href="{{ url('/elders') }}" wire:navigate class="btn-ghost" data-magnetic data-reveal>
+                        {{ $home->elders_button }}
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M19 12H5M11 18l-6-6 6-6"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="relative">
+                    <div id="elders-slider"
+                         class="slider-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory px-5 md:px-8 pb-6">
+                        @foreach ($elders as $elder)
+                            <a href="{{ url('/elders/'.$elder->slug) }}" wire:navigate
+                               class="group shrink-0 w-[210px] md:w-[240px] snap-center text-center"
+                               data-cursor="view">
+                                <div
+                                    class="relative arch w-[170px] h-[220px] mx-auto overflow-hidden border-[3px] border-leaf-700 shadow-lg group-hover:border-gold-500 transition-colors duration-500">
+                                    <img src="{{ \App\Support\Media::url($elder->photo) }}"
+                                         alt="{{ $elder->full_name }}" loading="lazy"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                    <div class="wreath">
+                                        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                                            @for ($i = 0; $i < 10; $i++)
+                                                <path d="M50 6 q6 -4 5 -10 q-6 4 -5 10z" fill="#3E8E41"
+                                                      transform="rotate({{ $i * 36 }} 50 50)"/>
+                                            @endfor
+                                            <circle cx="50" cy="50" r="47" stroke="#D4A24C" stroke-width="1"
+                                                    stroke-dasharray="4 5"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3
+                                    class="font-display text-xl mt-4 text-bark-900 group-hover:text-mulberry-700 transition-colors">
+                                    {{ $elder->full_name }}</h3>
+                                <p class="text-xs text-bark-700/70 mt-1">{{ $elder->title }}</p>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    <div class="flex gap-3 justify-center mt-2">
+                        <button id="slider-next" class="slider-arrow" aria-label="بعدی">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M9 6l6 6-6 6"/>
+                            </svg>
+                        </button>
+                        <button id="slider-prev" class="slider-arrow" aria-label="قبلی">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 6l-6 6 6 6"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </section>

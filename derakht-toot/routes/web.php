@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\GalleryItem;
 use App\Models\TimelineEvent;
 use App\Models\Tradition;
+use App\Models\Elder;
+use App\Models\News;
 
 Route::get('/', function (HomeSettings $home) {
     return view('home', [
@@ -16,5 +18,7 @@ Route::get('/', function (HomeSettings $home) {
         'galleryItems' => GalleryItem::visible()->get(),
         'timeline' => TimelineEvent::visible()->get(),
         'traditions' => Tradition::visible()->get(),
+        'latestNews' => News::published()->with('category')->latest('published_at')->take(4)->get(),
+        'elders' => Elder::visible()->take(6)->get(),
     ]);
 })->name('home');
