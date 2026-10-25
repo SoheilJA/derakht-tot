@@ -1,5 +1,16 @@
-import { listen } from '../lib/lifecycle';
-import { qsa } from '../lib/utils';
+import {listen, onCleanup} from '../lib/lifecycle';
+import {qsa} from '../lib/utils';
+
+// شناسه‌ی هر بخش صفحه‌ی اصلی ← شناسه‌ی لینک منو
+const SECTION_TO_NAV = {
+    hero: 'home',
+    about: 'about',
+    history: 'history',
+    'news-preview': 'news',
+    'elders-preview': 'elders',
+    'tree-teaser': 'family',
+    contact: 'contact',
+};
 
 export function initNavbar() {
     const nav = document.getElementById('site-nav');
@@ -19,17 +30,40 @@ export function initNavbar() {
     };
 
     onScroll();
-    listen(window, 'scroll', onScroll, { passive: true });
+    listen(window, 'scroll', onScroll, {passive: true});
 
-    // لینک فعال
-    const active = document.body.dataset.nav;
+    // برگِ کنار لینک فعال
+    const setActive = (key) => {
+        qsa('[data-navlink]').forEach((a) => {
+            const leaf = a.querySelector('.nav-leaf');
+            if (!leaf) return;
 
-    qsa('[data-navlink]').forEach((a) => {
-        const leaf = a.querySelector('.nav-leaf');
-        if (!leaf) return;
+            const on = a.dataset.navlink === key;
+            leaf.classList.toggle('opacity-0', !on);
+            leaf.classList.toggle('scale-0', !on);
+        });
+    };
 
-        const isActive = a.dataset.navlink === active;
-        leaf.classList.toggle('opacity-0', !isActive);
-        leaf.classList.toggle('scale-0', !isActive);
-    });
+    setActive(document.body.dataset.nav);
+
+    // صفحه‌ی اصلی: با اسکرول، لینک بخش جاری فعال می‌شود
+    if (document.body.dataset.page === 'home') {
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((en) => {
+                    if (en.isIntersecting && SECTION_TO_NAV[en.target.id]) {
+                        setActive(SECTION_TO_NAV[en.target.id]);
+                    }
+                });
+            },
+            {rootMargin: '-40% 0px -55% 0px'}
+        );
+
+        Object.keys(SECTION_TO_NAV).forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) io.observe(el);
+        });
+
+        onCleanup(() => io.disconnect());
+    }
 }

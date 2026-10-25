@@ -55,6 +55,35 @@ class ManageSite extends SettingsPage
                             ->directory('site')
                             ->visibility('public')
                             ->columnSpanFull(),
+
+                        Section::make('فوتر')
+                            ->schema([
+                                Textarea::make('footer_about')
+                                    ->label('متن معرفی در فوتر')
+                                    ->rows(3)
+                                    ->required(),
+
+                                TextInput::make('footer_credit')
+                                    ->label('جمله‌ی پایین فوتر')
+                                    ->required(),
+                            ]),
+
+                        Section::make('شبکه‌های اجتماعی')
+                            ->description('هر کدام را که خالی بگذارید، آیکونش در فوتر نمایش داده نمی‌شود. آیکون ایمیل از اطلاعات تماس صفحه‌ی اصلی ساخته می‌شود.')
+                            ->columns(3)
+                            ->schema([
+                                TextInput::make('telegram_url')
+                                    ->label('تلگرام')
+                                    ->url(),
+
+                                TextInput::make('instagram_url')
+                                    ->label('اینستاگرام')
+                                    ->url(),
+
+                                TextInput::make('whatsapp_url')
+                                    ->label('واتساپ')
+                                    ->url(),
+                            ]),
                     ]),
             ]);
     }
